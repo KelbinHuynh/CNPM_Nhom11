@@ -110,7 +110,7 @@ GO
 -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE LEC_MAJ(
 	ID			NVARCHAR(20)	PRIMARY KEY,
-	LECUTRER	NVARCHAR(20)	FOREIGN KEY REFERENCES LECTURER(ID),
+	LECTURER	NVARCHAR(20)	FOREIGN KEY REFERENCES LECTURER(ID),
 	MAJOR		NVARCHAR(20)	FOREIGN KEY REFERENCES MAJOR(ID),
 );
 GO
@@ -151,9 +151,9 @@ CREATE TABLE LEC_TEAM(
 GO
 -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE TKB_LEC(
-	ID			NVARCHAR(20)	PRIMARY KEY,
-	TKB			NVARCHAR(20)	FOREIGN KEY REFERENCES TKB(ID),
-	LEC			NVARCHAR(20)	FOREIGN KEY REFERENCES LECTURER(ID),
+	ID				NVARCHAR(20)	PRIMARY KEY,
+	TKB				NVARCHAR(20)	FOREIGN KEY REFERENCES TKB(ID),
+	LECTURER		NVARCHAR(20)	FOREIGN KEY REFERENCES LECTURER(ID),
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -384,6 +384,8 @@ GO
 CREATE OR ALTER PROCEDURE DEL_ADMIN
 	@ID			NVARCHAR(20)
 AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_ADMIN()
 	--DELETE--
 	DELETE FROM
 		ADMIN
@@ -493,7 +495,7 @@ CREATE OR ALTER PROCEDURE DEL_STUDENT
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_STUDENT()
+SELECT @CHECK = dbo.CHK_DEL_STUDENT()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -592,7 +594,7 @@ CREATE OR ALTER PROCEDURE DEL_LECTURER
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_LECTURER()
+SELECT @CHECK = dbo.CHK_DEL_LECTURER()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -655,7 +657,7 @@ AS
 DECLARE 
 	@ID			NVARCHAR(20)
 	,@IS_INS		INT
-SET @IS_INS = CHK_INS_ACCOUNT(@USERNAME);
+SET @IS_INS = dbo.CHK_INS_ACCOUNT(@USERNAME);
 
 	IF @IS_INS <> 0
 	BEGIN
@@ -698,7 +700,7 @@ CREATE OR ALTER PROCEDURE DEL_ACCOUNT
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_ACCOUNT()
+SELECT @CHECK = dbo.CHK_DEL_ACCOUNT()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -781,7 +783,7 @@ CREATE OR ALTER PROCEDURE DEL_MAJOR
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_MAJOR()
+SELECT @CHECK = dbo.CHK_DEL_MAJOR()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -879,7 +881,7 @@ CREATE OR ALTER PROCEDURE DEL_PROJECT
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_PROJECT()
+SELECT @CHECK = dbo.CHK_DEL_PROJECT()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -962,7 +964,7 @@ CREATE OR ALTER PROCEDURE DEL_TEAM
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_TEAM()
+SELECT @CHECK = dbo.CHK_DEL_TEAM()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -1055,7 +1057,7 @@ CREATE OR ALTER PROCEDURE DEL_TKB
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_TKB()
+SELECT @CHECK = dbo.CHK_DEL_TKB()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -1141,7 +1143,7 @@ CREATE OR ALTER PROCEDURE DEL_AD_ACC
 	@ID			NVARCHAR(20)
 AS
 DECLARE @CHECK INT
-SELECT @CHECK = CHK_DEL_AD_ACC()
+SELECT @CHECK = dbo.CHK_DEL_AD_ACC()
 IF @CHECK = 1
 	--DELETE--
 	DELETE FROM
@@ -1150,14 +1152,968 @@ IF @CHECK = 1
 		ID = @ID;
 GO
 --END <AD_ACC> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************-----------------------------------------------------------------------------------------------------------------
+--<STD_ACC> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_STD_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_STD_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_STD_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <STD_ACC>
+CREATE OR ALTER PROCEDURE INS_STD_ACC
+	@ACCOUNT		NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_STD_ACC AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		STD_ACC(
+			ACCOUNT
+			,STUDENT
+		)
+		VALUES(
+			@ACCOUNT
+			,@STUDENT
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <STD_ACC>
+CREATE OR ALTER PROCEDURE UPD_STD_ACC
+	@ID				NVARCHAR(20)
+	,@ACCOUNT		NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		STD_ACC 
+	SET 
+			ACCOUNT		= @ACCOUNT
+			,STUDENT	= @STUDENT
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_STD_ACC
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_STD_ACC()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		STD_ACC
+	WHERE 
+		ID = @ID;
+GO
+--END <STD_ACC> FUNCTIONS AND PROCEDURE**************************************************************************
 --***************************************************************************************************************
 -----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<LEC_ACC> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_LEC_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_LEC_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_LEC_ACC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <LEC_ACC>
+CREATE OR ALTER PROCEDURE INS_LEC_ACC
+	@ACCOUNT		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_LEC_ACC AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		LEC_ACC(
+			ACCOUNT
+			,LECTURER
+		)
+		VALUES(
+			@ACCOUNT
+			,@LECTURER
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <LEC_ACC>
+CREATE OR ALTER PROCEDURE UPD_LEC_ACC
+	@ID				NVARCHAR(20)
+	,@ACCOUNT		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		LEC_ACC 
+	SET 
+			ACCOUNT		= @ACCOUNT
+			,LECTURER	= @LECTURER
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_LEC_ACC
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_LEC_ACC()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		LEC_ACC
+	WHERE 
+		ID = @ID;
+GO
+--END <LEC_ACC> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<STD_MAJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_STD_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_STD_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_STD_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <STD_MAJ>
+CREATE OR ALTER PROCEDURE INS_STD_MAJ
+	@STUDENT		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_STD_MAJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		STD_MAJ(
+			STUDENT
+			,MAJOR
+		)
+		VALUES(
+			@STUDENT
+			,@MAJOR
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <STD_MAJ>
+CREATE OR ALTER PROCEDURE UPD_STD_MAJ
+	@ID				NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		STD_MAJ 
+	SET 
+			STUDENT		= @STUDENT
+			,MAJOR		= @MAJOR
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_STD_MAJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_STD_MAJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		STD_MAJ
+	WHERE 
+		ID = @ID;
+GO
+--END <STD_MAJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<LEC_MAJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_LEC_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_LEC_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_LEC_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <LEC_MAJ>
+CREATE OR ALTER PROCEDURE INS_LEC_MAJ
+	@LECTURER		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_LEC_MAJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		LEC_MAJ(
+			LECTURER
+			,MAJOR
+		)
+		VALUES(
+			@LECTURER
+			,@MAJOR
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <LEC_MAJ>
+CREATE OR ALTER PROCEDURE UPD_LEC_MAJ
+	@ID				NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		LEC_MAJ 
+	SET 
+			LECTURER		= @LECTURER
+			,MAJOR			= @MAJOR
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_LEC_MAJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_LEC_MAJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		LEC_MAJ
+	WHERE 
+		ID = @ID;
+GO
+--END <LEC_MAJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<PRJ_MAJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_PRJ_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_PRJ_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_PRJ_MAJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <PRJ_MAJ>
+CREATE OR ALTER PROCEDURE INS_PRJ_MAJ
+	@PROJECT		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_PRJ_MAJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		PRJ_MAJ(
+			PROJECT
+			,MAJOR
+		)
+		VALUES(
+			@PROJECT
+			,@MAJOR
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <PRJ_MAJ>
+CREATE OR ALTER PROCEDURE UPD_PRJ_MAJ
+	@ID				NVARCHAR(20)
+	,@PROJECT		NVARCHAR(20)
+	,@MAJOR			NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		PRJ_MAJ 
+	SET 
+			PROJECT		= @PROJECT
+			,MAJOR	= @MAJOR
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_PRJ_MAJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_PRJ_MAJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		PRJ_MAJ
+	WHERE 
+		ID = @ID;
+GO
+--END <PRJ_MAJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<TEAM_PRJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_TEAM_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_TEAM_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_TEAM_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <TEAM_PRJ>
+CREATE OR ALTER PROCEDURE INS_TEAM_PRJ
+	@PROJECT		NVARCHAR(20)
+	,@TEAM			NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_TEAM_PRJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		TEAM_PRJ(
+			PROJECT
+			,TEAM
+		)
+		VALUES(
+			@PROJECT
+			,@TEAM
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <TEAM_PRJ>
+CREATE OR ALTER PROCEDURE UPD_TEAM_PRJ
+	@ID				NVARCHAR(20)
+	,@PROJECT		NVARCHAR(20)
+	,@TEAM			NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		TEAM_PRJ 
+	SET 
+			PROJECT		= @PROJECT
+			,TEAM	= @TEAM
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_TEAM_PRJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_TEAM_PRJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		TEAM_PRJ
+	WHERE 
+		ID = @ID;
+GO
+--END <TEAM_PRJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<LEC_PRJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_LEC_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_LEC_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_LEC_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <LEC_PRJ>
+CREATE OR ALTER PROCEDURE INS_LEC_PRJ
+	@PROJECT		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_LEC_PRJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		LEC_PRJ(
+			PROJECT
+			,LECTURER
+		)
+		VALUES(
+			@PROJECT
+			,@LECTURER
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <LEC_PRJ>
+CREATE OR ALTER PROCEDURE UPD_LEC_PRJ
+	@ID				NVARCHAR(20)
+	,@PROJECT		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		LEC_PRJ 
+	SET 
+			PROJECT		= @PROJECT
+			,LECTURER	= @LECTURER
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_LEC_PRJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_LEC_PRJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		LEC_PRJ
+	WHERE 
+		ID = @ID;
+GO
+--END <LEC_PRJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<STD_TEAM> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_STD_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_STD_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_STD_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <STD_TEAM>
+CREATE OR ALTER PROCEDURE INS_STD_TEAM
+	@STUDENT		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_STD_TEAM AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		STD_TEAM(
+			STUDENT
+			,TEAM
+		)
+		VALUES(
+			@STUDENT
+			,@TEAM
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <STD_TEAM>
+CREATE OR ALTER PROCEDURE UPD_STD_TEAM
+	@ID				NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		STD_TEAM 
+	SET 
+			STUDENT		= @STUDENT
+			,TEAM= @TEAM
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_STD_TEAM
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_STD_TEAM()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		STD_TEAM
+	WHERE 
+		ID = @ID;
+GO
+--END <STD_TEAM> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<LEC_TEAM> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_LEC_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_LEC_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_LEC_TEAM()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <LEC_TEAM>
+CREATE OR ALTER PROCEDURE INS_LEC_TEAM
+	@LECTURER		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_LEC_TEAM AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		LEC_TEAM(
+			LECTURER
+			,TEAM
+		)
+		VALUES(
+			@LECTURER
+			,@TEAM
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <LEC_TEAM>
+CREATE OR ALTER PROCEDURE UPD_LEC_TEAM
+	@ID				NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		LEC_TEAM 
+	SET 
+			LECTURER		= @LECTURER
+			,TEAM= @TEAM
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_LEC_TEAM
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_LEC_TEAM()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		LEC_TEAM
+	WHERE 
+		ID = @ID;
+GO
+--END <LEC_TEAM> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<TKB_LEC> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_TKB_LEC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_TKB_LEC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_TKB_LEC()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <TKB_LEC>
+CREATE OR ALTER PROCEDURE INS_TKB_LEC
+	@TKB		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_TKB_LEC AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		TKB_LEC(
+			TKB
+			,LECTURER
+		)
+		VALUES(
+			@TKB
+			,@LECTURER
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <TKB_LEC>
+CREATE OR ALTER PROCEDURE UPD_TKB_LEC
+	@ID				NVARCHAR(20)
+	,@TKB		NVARCHAR(20)
+	,@LECTURER		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		TKB_LEC 
+	SET 
+			TKB		= @TKB
+			,LECTURER= @LECTURER
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_TKB_LEC
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_TKB_LEC()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		TKB_LEC
+	WHERE 
+		ID = @ID;
+GO
+--END <TKB_LEC> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+--<TEAM_TKB> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_TEAM_TKB()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_TEAM_TKB()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_TEAM_TKB()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <TEAM_TKB>
+CREATE OR ALTER PROCEDURE INS_TEAM_TKB
+	@TKB		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_TEAM_TKB AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		TEAM_TKB(
+			TKB
+			,TEAM
+		)
+		VALUES(
+			@TKB
+			,@TEAM
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <TEAM_TKB>
+CREATE OR ALTER PROCEDURE UPD_TEAM_TKB
+	@ID				NVARCHAR(20)
+	,@TKB		NVARCHAR(20)
+	,@TEAM		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		TEAM_TKB 
+	SET 
+			TKB		= @TKB
+			,TEAM= @TEAM
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_TEAM_TKB
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_TEAM_TKB()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		TEAM_TKB
+	WHERE 
+		ID = @ID;
+GO
+--END <TEAM_TKB> FUNCTIONS AND PROCEDURE**************************************************************************
 --***************************************************************************************************************
 -----------------------------------------------------------------------------------------------------------------
 --MORE PROCEDURES--
 --***************************************************************************************************************
-
-
+-----------------------------------------------------------------------------------------------------------------
+--MORE PROCEDURES--
+--***************************************************************************************************************
 -----------------------------------------------------------------------------------------------------------------
 --INSERT SOME ROW--
 -----------------------------------------------------------------------------------------------------------------
