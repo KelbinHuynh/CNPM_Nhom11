@@ -9,11 +9,19 @@
 
 
 --START DATABASE--
-CREATE DATABASE PROJECT;
---DROP DATABASE PROJECT; 
+CREATE DATABASE PROJECT
+GO
+/*
+USE master
+GO
+DROP DATABASE PROJECT
+GO
+*/
 -----------------------------------------------------------------------------------------------------------------
 
-USE PROJECT;
+USE PROJECT
+GO
+
 -----------------------------------------------------------------------------------------------------------------
 
 --CREATE TABLES--
@@ -48,6 +56,7 @@ CREATE TABLE ACCOUNT(
 	ID				NVARCHAR(20)	PRIMARY KEY
 	,USERNAME		NVARCHAR(225)	UNIQUE
 	,PASSWORD		NVARCHAR(255)
+	,ROLE			INT	--0:ADMIN, 1:LECTURE, 2: STUDENT
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -347,13 +356,14 @@ GO
 --INSERT A ROW TO <TABLEBNAME>
 CREATE OR ALTER PROCEDURE INS_ADMIN
 	@NAME		NVARCHAR(255)
+	,@USERNAME	NVARCHAR(255)
+	,@PASSWORD	NVARCHAR(255)
 AS
 DECLARE 
-	@ID NVARCHAR(20);
-SET 
+	@ID			NVARCHAR(20)
+	,@IDACC		NVARCHAR(20)
 	--GET ID--
-	@ID = CAST(NEXT VALUE FOR SEQ_ADMIN AS NVARCHAR(20));
-
+SET @ID			= CAST(NEXT VALUE FOR SEQ_ADMIN AS NVARCHAR(20))
 	--INSERT--
 	INSERT INTO 
 		ADMIN(
@@ -364,6 +374,13 @@ SET
 			@ID
 			,@NAME
 		)
+
+	EXEC INS_ACCOUNT	@USERNAME, @PASSWORD, 0
+	SELECT 
+		@IDACC = CAST(current_value AS NVARCHAR(20))
+	FROM sys.sequences
+	WHERE NAME = 'SEQ_ACCOUNT';
+	EXEC INS_AD_ACC		@IDACC, @ID
 GO
 -----------------------------------------------------------------------------------------------------------------
 --UPDATE A ROW IN <ADMIN>
@@ -384,13 +401,28 @@ GO
 CREATE OR ALTER PROCEDURE DEL_ADMIN
 	@ID			NVARCHAR(20)
 AS
-DECLARE @CHECK INT
+DECLARE 
+	@CHECK		INT
+	,@IDACC		NVARCHAR(20)
+	,@IDADACC	NVARCHAR(20)
 SELECT @CHECK = dbo.CHK_DEL_ADMIN()
+SELECT 
+	@IDACC = ACCOUNT.ID
+	,@IDADACC = AD_ACC.ID
+FROM 
+	ADMIN 
+	LEFT OUTER JOIN AD_ACC		ON	AD_ACC.ADMIN	= ADMIN.ID
+	LEFT OUTER JOIN ACCOUNT		ON  ACCOUNT.ID		= AD_ACC.ACCOUNT
+WHERE
+	ADMIN.ID = @ID
 	--DELETE--
+	EXEC DEL_AD_ACC		@IDADACC
+	EXEC DEL_ACCOUNT	@IDACC
 	DELETE FROM
 		ADMIN
 	WHERE 
 		ID = @ID;
+		
 GO
 --END <ADMIN> FUNCTIONS AND PROCEDURE***************************************************************************
 --***************************************************************************************************************
@@ -433,12 +465,15 @@ CREATE OR ALTER PROCEDURE INS_STUDENT
 	,@MALE			BIT
 	,@DATEOFBIRTH	DATE
 	,@MAJOR			NVARCHAR(20)
+	,@USERNAME		NVARCHAR(255)
+	,@PASSWORD		NVARCHAR(255)
 AS
-DECLARE 
-	@ID NVARCHAR(20);
-SET 
+DECLARE		
+	@ID			NVARCHAR(20)
+	,@IDACC		NVARCHAR(20)
+
 	--GET ID--
-	@ID = CAST(NEXT VALUE FOR SEQ_STUDENT AS NVARCHAR(20));
+SET @ID			= CAST(NEXT VALUE FOR SEQ_STUDENT AS NVARCHAR(20))
 
 	--INSERT--
 	INSERT INTO 
@@ -462,17 +497,24 @@ SET
 			,0
 			,0
 		)
+		
+	EXEC INS_ACCOUNT	@USERNAME, @PASSWORD, 2 
+	SELECT 
+		@IDACC = CAST(current_value AS NVARCHAR(20))
+	FROM sys.sequences
+	WHERE NAME = 'SEQ_ACCOUNT';
+	EXEC INS_STD_ACC		@IDACC, @ID
 GO
 -----------------------------------------------------------------------------------------------------------------
 --UPDATE A ROW IN <STUDENT>
 CREATE OR ALTER PROCEDURE UPD_STUDENT
-	@ID			NVARCHAR(20)
+	@ID				NVARCHAR(20)
 	,@FULLNAME		NVARCHAR(255)
 	,@MALE			BIT
 	,@DATEOFBIRTH	DATE
 	,@TEAM			NVARCHAR(20)
 	,@MAJOR			NVARCHAR(20)
-	,@GRADUATE_PRJ		BIT
+	,@GRADUATE_PRJ	BIT
 	,@MAJOR_PRJ		BIT
 AS
 	--UPDATE--
@@ -494,14 +536,28 @@ GO
 CREATE OR ALTER PROCEDURE DEL_STUDENT
 	@ID			NVARCHAR(20)
 AS
-DECLARE @CHECK INT
+DECLARE 
+	@CHECK		INT
+	,@IDACC		NVARCHAR(20)
+	,@IDSTDACC	NVARCHAR(20)
 SELECT @CHECK = dbo.CHK_DEL_STUDENT()
-IF @CHECK = 1
+SELECT 
+	@IDACC		= ACCOUNT.ID
+	,@IDSTDACC	= STD_ACC.ID
+FROM 
+	STUDENT
+	LEFT OUTER JOIN STD_ACC		ON	STD_ACC.STUDENT	= STUDENT.ID
+	LEFT OUTER JOIN ACCOUNT		ON  ACCOUNT.ID		= STD_ACC.ACCOUNT
+WHERE
+	STUDENT.ID = @ID
 	--DELETE--
 	DELETE FROM
 		STUDENT
 	WHERE 
 		ID = @ID;
+
+	EXEC DEL_ACCOUNT	@IDACC
+	EXEC DEL_AD_ACC		@IDSTDACC
 GO
 --END <STUDENT> FUNCTIONS AND PROCEDURE**************************************************************************
 --***************************************************************************************************************
@@ -544,12 +600,15 @@ CREATE OR ALTER PROCEDURE INS_LECTURER
 	,@MALE			BIT
 	,@MAJOR			NVARCHAR(20)
 	,@LEVEL			NVARCHAR(255)
+	,@USERNAME		NVARCHAR(255)
+	,@PASSWORD		NVARCHAR(255)
 AS
 DECLARE 
-	@ID NVARCHAR(20);
-SET 
-	--GET ID--
-	@ID = CAST(NEXT VALUE FOR SEQ_LECTURER AS NVARCHAR(20));
+	@ID			NVARCHAR(20)
+	,@IDACC		NVARCHAR(20)
+
+--GET ID--
+SET @ID			= CAST(NEXT VALUE FOR SEQ_LECTURER AS NVARCHAR(20))
 
 	--INSERT--
 	INSERT INTO 
@@ -567,6 +626,14 @@ SET
 			,@MAJOR
 			,@LEVEL
 		)
+			
+	
+	EXEC INS_ACCOUNT	@USERNAME, @PASSWORD, 1
+	SELECT 
+		@IDACC = CAST(current_value AS NVARCHAR(20))
+	FROM sys.sequences
+	WHERE NAME = 'SEQ_ACCOUNT';
+	EXEC INS_LEC_ACC		@IDACC, @ID
 GO
 -----------------------------------------------------------------------------------------------------------------
 --UPDATE A ROW IN <LECTURER>
@@ -593,14 +660,30 @@ GO
 CREATE OR ALTER PROCEDURE DEL_LECTURER
 	@ID			NVARCHAR(20)
 AS
-DECLARE @CHECK INT
+DECLARE 
+	@CHECK		INT
+	,@IDACC		NVARCHAR(20)
+	,@IDLECACC	NVARCHAR(20)
 SELECT @CHECK = dbo.CHK_DEL_LECTURER()
-IF @CHECK = 1
+SELECT 
+	@IDACC		= ACCOUNT.ID
+	,@IDLECACC	= LEC_ACC.ID
+FROM 
+	LECTURER
+	LEFT OUTER JOIN LEC_ACC		ON	LEC_ACC.LECTURER	= LECTURER.ID
+	LEFT OUTER JOIN ACCOUNT		ON  ACCOUNT.ID			= LEC_ACC.ACCOUNT
+WHERE
+	LECTURER.ID = @ID
+
+	EXEC DEL_AD_ACC		@IDLECACC
+	EXEC DEL_ACCOUNT	@IDACC
 	--DELETE--
 	DELETE FROM
 		LECTURER
 	WHERE 
 		ID = @ID;
+		
+
 GO
 --END <LECTURER> FUNCTIONS AND PROCEDURE*************************************************************************
 --***************************************************************************************************************
@@ -613,19 +696,7 @@ RETURNS INT
 WITH EXECUTE AS CALLER
 AS
 BEGIN
-DECLARE 
-	@USER INT
-SET 
-	@USER = 0
-
-	SELECT 
-		@USER = COUNT(USERNAME)
-	FROM 
-		ACCOUNT AS ACC
-	WHERE
-		ACC.USERNAME = @USERNAME 
-
-	RETURN @USER
+	RETURN 1
 END
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -651,8 +722,9 @@ GO
 -----------------------------------------------------------------------------------------------------------------
 --INSERT A ROW TO <ACCOUNT>
 CREATE OR ALTER PROCEDURE INS_ACCOUNT
-	@USERNAME		NVARCHAR(255)
+	@USERNAME			NVARCHAR(255)
 	,@PASSWORD			NVARCHAR(255)
+	,@ROLE				INT
 AS
 DECLARE 
 	@ID			NVARCHAR(20)
@@ -670,20 +742,23 @@ SET @IS_INS = dbo.CHK_INS_ACCOUNT(@USERNAME);
 				ID
 				,USERNAME
 				,PASSWORD
+				,ROLE
 			)
 			VALUES(
 				@ID
 				,@USERNAME
 				,@PASSWORD
+				,@ROLE
 			)
 	END;
 GO
 -----------------------------------------------------------------------------------------------------------------
 --UPDATE A ROW IN <ACCOUNT>
 CREATE OR ALTER PROCEDURE UPD_ACCOUNT
-	@ID			NVARCHAR(20)
+	@ID				NVARCHAR(20)
 	,@USERNAME		NVARCHAR(255)
-	,@PASSWORD			NVARCHAR(255)
+	,@PASSWORD		NVARCHAR(255)
+	,@ROLE			INT
 AS
 	--UPDATE--
 	UPDATE 
@@ -691,6 +766,7 @@ AS
 	SET 
 		USERNAME		= @USERNAME
 		,PASSWORD		= @PASSWORD
+		,ROLE			= @ROLE
 	WHERE 
 		ID = @ID;
 GO
@@ -1112,11 +1188,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		AD_ACC(
-			ACCOUNT
+			ID
+			,ACCOUNT
 			,ADMIN
 		)
 		VALUES(
-			@ACCOUNT
+			@ID
+			,@ACCOUNT
 			,@ADMIN
 		)
 END;
@@ -1197,11 +1275,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		STD_ACC(
-			ACCOUNT
+			ID
+			,ACCOUNT
 			,STUDENT
 		)
 		VALUES(
-			@ACCOUNT
+			@ID
+			,@ACCOUNT
 			,@STUDENT
 		)
 END;
@@ -1284,11 +1364,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		LEC_ACC(
-			ACCOUNT
+			ID
+			,ACCOUNT
 			,LECTURER
 		)
 		VALUES(
-			@ACCOUNT
+			@ID
+			,@ACCOUNT
 			,@LECTURER
 		)
 END;
@@ -1371,11 +1453,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		STD_MAJ(
-			STUDENT
+			ID
+			,STUDENT
 			,MAJOR
 		)
 		VALUES(
-			@STUDENT
+			@ID
+			,@STUDENT
 			,@MAJOR
 		)
 END;
@@ -1458,11 +1542,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		LEC_MAJ(
-			LECTURER
+			ID
+			,LECTURER
 			,MAJOR
 		)
 		VALUES(
-			@LECTURER
+			@ID
+			,@LECTURER
 			,@MAJOR
 		)
 END;
@@ -1545,11 +1631,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		PRJ_MAJ(
-			PROJECT
+			ID
+			,PROJECT
 			,MAJOR
 		)
 		VALUES(
-			@PROJECT
+			@ID
+			,@PROJECT
 			,@MAJOR
 		)
 END;
@@ -1632,11 +1720,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		TEAM_PRJ(
-			PROJECT
+			ID
+			,PROJECT
 			,TEAM
 		)
 		VALUES(
-			@PROJECT
+			@ID
+			,@PROJECT
 			,@TEAM
 		)
 END;
@@ -1719,11 +1809,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		LEC_PRJ(
-			PROJECT
+			ID
+			,PROJECT
 			,LECTURER
 		)
 		VALUES(
-			@PROJECT
+			@ID
+			,@PROJECT
 			,@LECTURER
 		)
 END;
@@ -1806,11 +1898,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		STD_TEAM(
-			STUDENT
+			ID
+			,STUDENT
 			,TEAM
 		)
 		VALUES(
-			@STUDENT
+			@ID
+			,@STUDENT
 			,@TEAM
 		)
 END;
@@ -1893,11 +1987,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		LEC_TEAM(
-			LECTURER
+			ID
+			,LECTURER
 			,TEAM
 		)
 		VALUES(
-			@LECTURER
+			@ID
+			,@LECTURER
 			,@TEAM
 		)
 END;
@@ -1980,11 +2076,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		TKB_LEC(
-			TKB
+			ID
+			,TKB
 			,LECTURER
 		)
 		VALUES(
-			@TKB
+			@ID
+			,@TKB
 			,@LECTURER
 		)
 END;
@@ -2067,11 +2165,13 @@ BEGIN
 	--INSERT--
 	INSERT INTO 
 		TEAM_TKB(
-			TKB
+			ID
+			,TKB
 			,TEAM
 		)
 		VALUES(
-			@TKB
+			@ID
+			,@TKB
 			,@TEAM
 		)
 END;
