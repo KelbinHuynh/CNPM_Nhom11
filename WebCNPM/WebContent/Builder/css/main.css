@@ -718,6 +718,21 @@ body {
     border-radius: 30%;
 }
 
+.slick .prev,
+.slick .next,
+.slick #slick-dot{
+    height: 30px;
+    width: 30px;
+    margin: 0 10px;
+    border-radius: 30%;
+}
+
+.slick .prev:hover,
+.slick .next:hover,
+.slick .active_product{
+    background: linear-gradient(to right, #fa9e1b, #8d4fff);
+}
+
 .container .border_product_home .prev:hover,
 .container .border_product_home .next:hover,
 .container .border_product_home .active_product{
@@ -839,6 +854,9 @@ body {
 }
 
 .modal.show{
+    display: flex;
+}
+.modal.showed{
     display: flex;
 }
 
