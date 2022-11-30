@@ -380,7 +380,7 @@ body {
 
 .categories_menu_container{
     text-transform: uppercase;
-    padding-top: 140px;
+    padding-top: 135px;
 }
 
 .categories_menu_container--menu{
@@ -744,59 +744,14 @@ body {
 .footer{
 	margin-top:100px
 }
-.footer .footer_companion--main{
-    background-color: rgba( 255, 255, 255, 0.00);
-    box-shadow: 0px 0px 15px 0px rgb(31 38 200 / 7%);
-    border-radius: 5px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+
+.footer .text-center{
+	 text-align: center;
+	 font-size: 16px;
 }
-
-.footer .footer_companion--heading{
-    position: relative;
-    margin-bottom: 10px;
-    text-align: center;
+.footer .text-danger{
+	color: #fff;
 }
-
-.footer .footer_companion--heading::after{
-    content: "";
-    display: block;
-    margin: 10px auto 0;
-    width: 100px;
-    height: 5px;
-    background: linear-gradient(to right, #fa9e1b, #8d4fff);
-}
-
-.footer .footer_companion--heading .heading--title{
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    line-height: 1.2;
-    font-size: calc(1.275rem + 0.3vw);
-    text-transform: uppercase;
-    color: var(--white-color);
-    font-weight: bold;
-}
-
-.footer .footer_companion--list li{
-    float: left;
-    width: 19%;
-    text-align: center;
-    background: #f6f6f6;
-    padding: 30px 0;
-    margin: 0 .5%;
-    border: solid #eee 3px;
-    list-style: none;
-}
-
-.footer .footer_companion--list .footer_companion--img{
-    width: 130px;
-    height: 42px;
-    object-fit: fill;
-}
-
-
-/* Phần footer */
 .footer{
     position: relative;
     width: 100%;
@@ -804,41 +759,7 @@ body {
     padding-bottom: 20px;
     background: #31124b;
 }
-.footer .footer_main--heading{
-    font-size: 18px;
-    font-weight: 600;
-    color: #fff;
-    line-height: 2;
-    margin-top: 20%;
-    margin-bottom: 15px;
-    text-transform: uppercase
-}
 
-
-.footer p{
-    color: #fff;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-}
-.footer a{
-    color: #fff;
-}
-.footer a:hover{
-    color: #eda84a;
-}
-
-.footer i{
-    margin-right: 5px;
-}
-
-.footer li{
-    list-style: none;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-    margin: 10px 0;
-}
 
 .modal{
     position: fixed;
