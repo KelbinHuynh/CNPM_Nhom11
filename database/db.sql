@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------------------------------
+﻿-----------------------------------------------------------------------------------------------------------------
 -- AUTH: GIDEON
 -- DATE: 29TH OCT 2022
 ---------------------------------
@@ -9,17 +9,17 @@
 
 
 --START DATABASE--
-CREATE DATABASE PROJECT
+CREATE DATABASE FINALPROJECT
 GO
 /*
 USE master
 GO
-DROP DATABASE PROJECT
+DROP DATABASE FINALPROJECT
 GO
 */
 -----------------------------------------------------------------------------------------------------------------
 
-USE PROJECT
+USE FINALPROJECT
 GO
 
 -----------------------------------------------------------------------------------------------------------------
@@ -135,6 +135,8 @@ CREATE TABLE TEAM_PRJ(
 	ID			NVARCHAR(20)	PRIMARY KEY,
 	TEAM		NVARCHAR(20)	FOREIGN KEY REFERENCES TEAM(ID),
 	PROJECT		NVARCHAR(20)	FOREIGN KEY REFERENCES PROJECT(ID),
+	SCORE		INT,
+	PROTECTED	BIT,	--TRẠNG THÁI ĐÃ ĐƯỢC BỎA VỆ HAY CHƯA CỦA PROJECT, 0; CHƯA BẢO VỆ, 1: ĐÃ BẢO VỆ 
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -1723,11 +1725,15 @@ BEGIN
 			ID
 			,PROJECT
 			,TEAM
+			,SCORE
+			,PROTECTED
 		)
 		VALUES(
 			@ID
 			,@PROJECT
 			,@TEAM
+			,0
+			,0
 		)
 END;
 GO
@@ -1737,13 +1743,17 @@ CREATE OR ALTER PROCEDURE UPD_TEAM_PRJ
 	@ID				NVARCHAR(20)
 	,@PROJECT		NVARCHAR(20)
 	,@TEAM			NVARCHAR(20)
+	,@SCORE			INT
+	,@PROTECTED		BIT
 AS
 	--UPDATE--
 	UPDATE 
 		TEAM_PRJ 
 	SET 
 			PROJECT		= @PROJECT
-			,TEAM	= @TEAM
+			,TEAM		= @TEAM
+			,SCORE		= @SCORE
+			,PROTECTED	= @PROTECTED
 	WHERE 
 		ID = @ID;
 GO
