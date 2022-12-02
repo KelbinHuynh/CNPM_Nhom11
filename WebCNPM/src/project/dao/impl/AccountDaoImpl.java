@@ -9,6 +9,12 @@ import java.sql.ResultSet;
 import Connection.DBConnection;
 import project.dao.IAccountDao;
 import project.model.Account;
+import project.service.IAdminService;
+import project.service.ILecturerService;
+import project.service.IStudentService;
+import project.service.impl.AdminServiceImpl;
+import project.service.impl.LecturerServiceImpl;
+import project.service.impl.StudentServiceImpl;
 
 
 public class AccountDaoImpl extends DBConnection implements IAccountDao{
@@ -25,8 +31,17 @@ public class AccountDaoImpl extends DBConnection implements IAccountDao{
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			rs = ps.executeQuery();
-			while (rs.next()) {
+			while (rs.next()) {				
 				Account account = new Account();
+				IStudentService stservice = new StudentServiceImpl();
+				account.setStudent(stservice.findaccount(rs.getString("ID")));
+				
+				ILecturerService leservice = new LecturerServiceImpl();
+				account.setLecturer(leservice.findaccount(rs.getString("ID")));
+				
+				IAdminService adservice = new AdminServiceImpl();
+				account.setAdmin(adservice.findaccount(rs.getString("ID")));
+				
 				account.setId(rs.getString("ID"));
 				account.setUsername(rs.getString("USERNAME"));
 				account.setPassword(rs.getString("PASSWORD"));
