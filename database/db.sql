@@ -77,7 +77,7 @@ GO
 -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE TEAM(
 	ID			NVARCHAR(20)	PRIMARY KEY
-	,LEADER		NVARCHAR(20)
+	,LEADER		NVARCHAR(20)            FOREIGN KEY REFERENCES STUDENT(ID)
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ CREATE TABLE TEAM_PRJ(
 	TEAM		NVARCHAR(20)	FOREIGN KEY REFERENCES TEAM(ID),
 	PROJECT		NVARCHAR(20)	FOREIGN KEY REFERENCES PROJECT(ID),
 	SCORE		INT,
-	PROTECTED	BIT,	--TRẠNG THÁI ĐÃ ĐƯỢC BỎA VỆ HAY CHƯA CỦA PROJECT, 0; CHƯA BẢO VỆ, 1: ĐÃ BẢO VỆ 
+	PROTECTED	BIT DEFAULT 0,	--TRẠNG THÁI ĐÃ ĐƯỢC BỎA VỆ HAY CHƯA CỦA PROJECT, 0; CHƯA BẢO VỆ, 1: ĐÃ BẢO VỆ 
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
