@@ -9,6 +9,9 @@ public class Account implements Serializable {
 	private String username;
 	private String password;
 	private int role;
+	private Student student;
+	private Lecturer lecturer;
+	private Admin admin;
 	public String getId() {
 		return id;
 	}
@@ -32,6 +35,24 @@ public class Account implements Serializable {
 	}
 	public void setRole(int role) {
 		this.role = role;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	public Lecturer getLecturer() {
+		return lecturer;
+	}
+	public void setLecturer(Lecturer lecturer) {
+		this.lecturer = lecturer;
+	}
+	public Admin getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 	
