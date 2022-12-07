@@ -61,7 +61,7 @@ GO
 
 EXEC INS_TEAM_PRJ '0', '0'
 EXEC INS_TEAM_PRJ '1', '1'
-
+GO
 
 
 SELECT 
