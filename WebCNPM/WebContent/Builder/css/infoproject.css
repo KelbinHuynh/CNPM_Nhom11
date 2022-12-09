@@ -1,0 +1,49 @@
+.footable {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 14.4px;
+    font-family: arial;
+}
+
+.footable {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+}
+
+.footable > tbody > tr > td {
+    border-top: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    padding: 10px;
+    text-align: left;
+    padding: 15px 10px;
+    color: rgb(3, 74, 130)!important;
+}
+
+.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td {
+    padding: 8px;
+    line-height: 1.428571429;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+a {
+    color: rgb(3, 74, 130);
+}
