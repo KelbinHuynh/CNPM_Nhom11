@@ -1,0 +1,161 @@
+.user-page {
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgb(0 0 0 / 5%);
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 240px;
+    font-weight: bold;
+}
+
+.page-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-family: Roboto-Medium;
+    text-transform: capitalize;
+    padding: 0 0 10px;
+    position: relative;
+}
+
+.areas_upload_image_profile {
+    width: 18rem;
+    overflow: hidden;
+    border-left: 0.0625rem solid #efefef;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.choose_file {
+    position: relative;
+    /* margin-left: 25px; */
+    color: #7f7f7f;
+    margin-top: 2px;
+    background: white;
+}
+
+.btn_upload_avatar {
+    -webkit-appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: grab;
+    margin-left: 70px;
+    width: 150px;
+    height: 150px;
+    margin-top: 0px;
+}
+
+.btn_upload_image_profile{
+    border: 1px solid rgba(0,0,0,.09);
+    width: 50%;
+    display: flex;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#blah{
+    width: 150px;
+    height: 150px;
+}
+
+.user-page .user-form {
+    max-width: 450px;
+}
+
+.user-page .user-form .form-wrap .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem !important;
+}
+
+.user-page .user-form .form-wrap .form-group label {
+    width: 150px;
+    padding: 0.375rem 0rem;
+    font-family: Roboto-Medium;
+}
+
+.user-page .user-form .form-wrap .form-group label+div {
+    width: calc(100% - 150px);
+}
+
+button.btn {
+    padding: 0px 15px 0px 15px;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    line-height: 48px;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #000;
+    position: relative;
+	font-weight: 580;
+	font-family: Roboto-Medium;
+	cursor: pointer;
+}
+
+.bg-button {
+    background: #AAAAAA;
+}
+
+.btn_update{
+    display: inline-block;
+    cursor: pointer;
+}
+
+button, input, optgroup, select, textarea {
+    line-height: 2;
+}
+
+.show_pass{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.show_pass > .field_icon {
+    float: right;
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    cursor: pointer;
+    z-index: 2;
+    color: #b4b4b491;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.user-page .user-form .form-wrap .reset_pass label {
+    width: 200px;
+}
+
+.user-page .user-form .form-wrap .reset_pass label+div {
+    width: calc(100% - 200px);
+}
+
+.user-page .change_form{
+    max-width: 500px;
+}
+
+
