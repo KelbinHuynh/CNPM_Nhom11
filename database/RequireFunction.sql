@@ -30,9 +30,10 @@ EXEC INS_LECTURER N'Trần Thị E', 0, N'0', N'Giảng Viên', N'e-tt', N'12345
 EXEC INS_LECTURER N'Trường Công F', 1, N'2', N'Giảng Viên', N'f-tc', N'123456789'
 GO
 
-EXEC INS_STUDENT N'Nguyễn Văn G', 1,'10/01/2000',N'0', N'g-nv', N'123456789'
-EXEC INS_STUDENT N'Phạm Thị H', 0,'18/04/2001',N'1', N'h-pt', N'123456789'
-EXEC INS_STUDENT N'Trịnh Thị I', 0,'06/07/2001',N'2', N'i-tt', N'123456789'
+EXEC INS_STUDENT N'Nguyễn Văn G', 1,'10/01/2000','0358913075', N'0', N'g-nv', N'123456789'
+EXEC INS_STUDENT N'Phạm Thị H', 0,'18/04/2001','0358913075',N'1', N'h-pt', N'123456789'
+EXEC INS_STUDENT N'Trịnh Thị I', 0,'06/07/2001','0358913075',N'2', N'i-tt', N'123456789'
+EXEC INS_STUDENT N'Huỳnh Anh V', 0,'06/09/2002','0358913075',N'2', N'v-ha', N'123456789'
 GO
 
 EXEC INS_PROJECT N'Máy phát nhạc MP3 trên nền kit nhúng', N'Hệ thống nhúng, lập trình', '12-01-2022', 1
@@ -61,6 +62,12 @@ GO
 
 EXEC INS_TEAM_PRJ '0', '0'
 EXEC INS_TEAM_PRJ '1', '1'
+GO
+
+EXEC INS_STD_MAJ '0', '0'
+EXEC INS_STD_MAJ '1', '1'
+EXEC INS_STD_MAJ '2', '2'
+EXEC INS_STD_MAJ '3', '2'
 GO
 
 
