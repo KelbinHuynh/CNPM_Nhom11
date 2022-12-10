@@ -36,6 +36,7 @@ CREATE TABLE STUDENT(
 	,FULLNAME		NVARCHAR(255)
 	,MALE			BIT
 	,DATEOFBIRTH	DATE
+	,PHONENUMBER	NVARCHAR(10)
 	,TEAM			NVARCHAR(20)
 	,MAJOR			NVARCHAR(20)
 	,GRADUATE_PRJ	BIT			DEFAULT 0
@@ -77,7 +78,7 @@ GO
 -----------------------------------------------------------------------------------------------------------------
 CREATE TABLE TEAM(
 	ID			NVARCHAR(20)	PRIMARY KEY
-	,LEADER		NVARCHAR(20)            FOREIGN KEY REFERENCES STUDENT(ID)
+	,LEADER		NVARCHAR(20)
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -136,7 +137,16 @@ CREATE TABLE TEAM_PRJ(
 	TEAM		NVARCHAR(20)	FOREIGN KEY REFERENCES TEAM(ID),
 	PROJECT		NVARCHAR(20)	FOREIGN KEY REFERENCES PROJECT(ID),
 	SCORE		INT,
-	PROTECTED	BIT DEFAULT 0,	--TRẠNG THÁI ĐÃ ĐƯỢC BỎA VỆ HAY CHƯA CỦA PROJECT, 0; CHƯA BẢO VỆ, 1: ĐÃ BẢO VỆ 
+	PROTECTED	BIT,	--TRẠNG THÁI ĐÃ ĐƯỢC BỎA VỆ HAY CHƯA CỦA PROJECT, 0; CHƯA BẢO VỆ, 1: ĐÃ BẢO VỆ 
+);
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE TABLE STD_PRJ(
+	ID			NVARCHAR(20)	PRIMARY KEY,
+	STUDENT		NVARCHAR(20)	FOREIGN KEY REFERENCES STUDENT(ID),
+	PROJECT		NVARCHAR(20)	FOREIGN KEY REFERENCES PROJECT(ID),
+
+	UNIQUE(STUDENT, PROJECT),
 );
 GO
 -----------------------------------------------------------------------------------------------------------------
@@ -279,6 +289,13 @@ AS BIGINT
 GO
 -----------------------------------------------------------------------------------------------------------------
 CREATE SEQUENCE SEQ_TEAM_PRJ
+AS BIGINT
+	START WITH 0
+	INCREMENT BY 1
+	MAXVALUE 9223372036854775807
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE SEQUENCE SEQ_STD_PRJ
 AS BIGINT
 	START WITH 0
 	INCREMENT BY 1
@@ -466,6 +483,7 @@ CREATE OR ALTER PROCEDURE INS_STUDENT
 	@FULLNAME		NVARCHAR(255)
 	,@MALE			BIT
 	,@DATEOFBIRTH	DATE
+	,@PHONENUMBER	NVARCHAR(10)
 	,@MAJOR			NVARCHAR(20)
 	,@USERNAME		NVARCHAR(255)
 	,@PASSWORD		NVARCHAR(255)
@@ -484,6 +502,7 @@ SET @ID			= CAST(NEXT VALUE FOR SEQ_STUDENT AS NVARCHAR(20))
 			,FULLNAME
 			,MALE
 			,DATEOFBIRTH
+			,PHONENUMBER
 			,TEAM
 			,MAJOR
 			,GRADUATE_PRJ
@@ -494,6 +513,7 @@ SET @ID			= CAST(NEXT VALUE FOR SEQ_STUDENT AS NVARCHAR(20))
 			,@FULLNAME
 			,@MALE
 			,@DATEOFBIRTH
+			,@PHONENUMBER
 			,NULL
 			,@MAJOR
 			,0
@@ -514,6 +534,7 @@ CREATE OR ALTER PROCEDURE UPD_STUDENT
 	,@FULLNAME		NVARCHAR(255)
 	,@MALE			BIT
 	,@DATEOFBIRTH	DATE
+	,@PHONENUMBER	NVARCHAR(10)
 	,@TEAM			NVARCHAR(20)
 	,@MAJOR			NVARCHAR(20)
 	,@GRADUATE_PRJ	BIT
@@ -526,6 +547,7 @@ AS
 		FULLNAME		= @FULLNAME
 		,MALE			= @MALE
 		,DATEOFBIRTH	= @DATEOFBIRTH
+		,PHONENUMBER	= @PHONENUMBER
 		,TEAM			= @TEAM
 		,MAJOR			= @MAJOR
 		,GRADUATE_PRJ	= @GRADUATE_PRJ
@@ -1772,6 +1794,91 @@ IF @CHECK = 1
 		ID = @ID;
 GO
 --END <TEAM_PRJ> FUNCTIONS AND PROCEDURE**************************************************************************
+--***************************************************************************************************************
+-------------------------------------------------------------------------------------------------------------------<STD_PRJ> FUNCTIONS AND PROCEDURE******************************************************************************
+CREATE OR ALTER FUNCTION CHK_INS_STD_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_UPD_STD_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER FUNCTION CHK_DEL_STD_PRJ()
+RETURNS INT
+WITH EXECUTE AS CALLER
+AS 
+BEGIN
+	RETURN 1
+END
+GO
+-----------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------
+--INSERT A ROW TO <STD_PRJ>
+CREATE OR ALTER PROCEDURE INS_STD_PRJ
+AS
+DECLARE 
+	@ID			NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+	,@PROJECT		NVARCHAR(20)
+--GET ID--
+SELECT @ID = CAST(NEXT VALUE FOR SEQ_STD_PRJ AS NVARCHAR(20))
+BEGIN
+
+	--INSERT--
+	INSERT INTO 
+		STD_PRJ(
+			STUDENT
+			,PROJECT
+		)
+		VALUES(
+			@STUDENT
+			,@PROJECT
+		)
+END;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--UPDATE A ROW IN <STD_PRJ>
+CREATE OR ALTER PROCEDURE UPD_STD_PRJ
+	@ID				NVARCHAR(20)
+	,@STUDENT		NVARCHAR(20)
+	,@PROJECT		NVARCHAR(20)
+AS
+	--UPDATE--
+	UPDATE 
+		STD_PRJ 
+	SET 
+			STUDENT		= @STUDENT
+			,PROJECT	= @PROJECT
+	WHERE 
+		ID = @ID;
+GO
+-----------------------------------------------------------------------------------------------------------------
+--DELETE A ROW IN <TABLEBNAME>
+CREATE OR ALTER PROCEDURE DEL_STD_PRJ
+	@ID			NVARCHAR(20)
+AS
+DECLARE @CHECK INT
+SELECT @CHECK = dbo.CHK_DEL_STD_PRJ()
+IF @CHECK = 1
+	--DELETE--
+	DELETE FROM
+		STD_PRJ
+	WHERE 
+		ID = @ID;
+GO
+--END <STD_PRJ> FUNCTIONS AND PROCEDURE**************************************************************************
 --***************************************************************************************************************
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
