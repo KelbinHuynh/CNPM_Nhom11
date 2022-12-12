@@ -23,7 +23,6 @@ GO
 EXEC INS_MAJOR N'Công nghệ phần mềm'
 EXEC INS_MAJOR N'Hệ thống thông tin'
 EXEC INS_MAJOR N'Mạng máy tính'
-EXEC INS_MAJOR N'Mạng máy tính'
 GO
 
 EXEC INS_LECTURER N'Đoàn Văn D', 1, N'1', N'Giảng Viên', N'd-dv', N'123456789'
