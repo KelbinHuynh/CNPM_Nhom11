@@ -38,7 +38,7 @@
 		<div id="search">
 			<section class="purchase_page mb_20px ">
 				<div id="project_major">
-					<form action="${pageContext.request.contextPath }/DangKyDeTaiSV"
+					<form action="${pageContext.request.contextPath }/CapNhatDeTai?idproject=${projectTeam.id}"
 						class="form" method="POST">
 						<div class=form__radios>
 							<h2>Tên đề tài</h2>
@@ -71,18 +71,9 @@
 
 						<div class="form__radios">
 							<h2>Giáo viên hướng dẫn</h2>
-							<div>
-								<select id="search_cn" class="form-control control" name="gvhd"
-									disabled="disabled">
-									<c:forEach items="${lecturerList }" var="lecturer">
-										<option
-											value="${lecturer.id} ${lecturer.id == projectTeam.lecturer.id ? 'selected':''}">${lecturer.fullname}</option>
-									</c:forEach>
-								</select> <span class="btn_update btn_update_1" onclick="update(3)">
-									<i class="fa-sharp fa-solid fa-pen-to-square update_info"></i>Chỉnh
-									Sửa
-								</span>
-							</div>
+							<input type="text" name="lecturer"
+								value="${projectTeam.lecturer.fullname}" class="form__radio"
+								disabled="disabled" />
 						</div>
 						<div>
 							<h2>Thành viên nhóm</h2>
@@ -90,7 +81,7 @@
 								<c:forEach items="${projectTeam.team.student }" var="student">
 									<div id="info${student.id }">
 										<div class="form__radio">
-											<label>${student.fullname}</label> <span
+											<label>${student.fullname}</label> <span style="cursor: pointer"
 												class=" btn_update_1" onclick="showinfo(${student.id})">
 												<i class="fa-solid fa-eye update_info"></i>Xem thông tin
 											</span>
@@ -105,12 +96,16 @@
 							<div>
 								<h2>Sinh viên quan tâm</h2>
 								<div class="form__radios">
-									<c:forEach items="${studentList }" var="studentToProject">
-										<div id="info${student.id }">
+									<c:forEach items="${studentList }" var="studentCare">
+										<div id="info${studentCare.id }">
 											<div class="form__radio">
-												<label>${student.fullname}</label> <span
-													class=" btn_update_1" onclick="showinfo(${student.id})">
+												<label>${studentCare.fullname}</label> <span style="margin-right: 30px; cursor: pointer"
+													class=" btn_update_1" onclick="showinfo(${studentCare.id})">
 													<i class="fa-solid fa-eye update_info"></i>Xem thông tin
+												</span>
+												<span style="cursor: pointer"
+													class=" btn_update_1" onclick="location.href='${pageContext.request.contextPath }/AcceptJoinProject?sid=${studentCare.id}&idproject=${ projectTeam.id}'">
+													<i class="fa-solid fa-check update_info"></i>Thêm sinh viên 
 												</span>
 											</div>
 										</div>
@@ -118,6 +113,32 @@
 								</div>
 							</div>
 						</c:if>
+						<div class="form__radios">
+							<h2>Trạng thái</h2>
+							<c:if test="${projectTeam.protecte eq false }">
+									<input type="text" name="lecturer"
+								value="Chưa được bảo vệ" class="form__radio"
+								disabled="disabled" />
+								</c:if>
+								<c:if test="${projectTeam.protecte eq true }">
+									<input type="text" name="lecturer"
+								value="Được bảo vệ" class="form__radio"
+								disabled="disabled" />
+								</c:if>
+						</div>
+						<div class="form__radios">
+							<h2>Điểm đề tài </h2>
+							<c:if test="${project.score == null }">
+									<input type="text" name="lecturer"
+								value="Chưa có điểm" class="form__radio"
+								disabled="disabled" />
+								</c:if>
+								<c:if test="${project.score != null }">
+								<input type="text" name="lecturer"
+								value="${projectTeam.score }" class="form__radio"
+								disabled="disabled" />
+								</c:if>
+						</div>
 
 						<div>
 							<button class="button button--full" type="submit">Cập

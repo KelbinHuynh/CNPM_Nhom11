@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/project/service/impl/StudentServiceImpl.java
 package project.service.impl;
 
 import java.util.List;
@@ -32,42 +31,22 @@ public class StudentServiceImpl implements IStudentService{
 		return studentDao.findStudentToProject(projectid);
 	}
 
-
-}
-=======
-package project.service.impl;
-
-import java.util.List;
-
-import project.dao.IStudentDao;
-import project.dao.impl.StudentDaoImpl;
-import project.model.Student;
-import project.service.IStudentService;
-
-public class StudentServiceImpl implements IStudentService{
-
-	IStudentDao studentDao = new StudentDaoImpl();
-
 	@Override
-	public Student findaccount(String id) {
-		return studentDao.findaccount(id);
+	public void insertToProject(String studentid, String projectid) {
+		studentDao.insertToProject(studentid, projectid);
+		
 	}
 
 	@Override
-	public List<Student> findStudentToTeam(String idteam) {
-		return studentDao.findStudentToTeam(idteam);
+	public boolean checkStdWithPrjCare(String studentid, String projectid) {
+		return studentDao.checkStdWithPrjCare(studentid, projectid);
 	}
 
 	@Override
-	public Student findStudent(String studentid) {
-		return studentDao.findStudent(studentid);
-	}
-
-	@Override
-	public List<Student> findStudentToProject(String projectid) {
-		return studentDao.findStudentToProject(projectid);
+	public void deleteStdCarePrj(String studentid, String projectid) {
+		studentDao.deleteStdCarePrj(studentid, projectid);
+		
 	}
 
 
 }
->>>>>>> 8cab83567cce0d9cf315728e307c6914940660b5:WebCNPM/src/project/service/impl/StudentServiceImpl.java

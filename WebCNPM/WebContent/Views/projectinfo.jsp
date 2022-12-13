@@ -138,27 +138,35 @@
 								<td colspan="2"><c:if
 										test="${account != null and (project.team.student.size() == null or project.team.student.size() == 1)}">
 										<c:if test="${account.student.team.id == null}">
-											<button id="back" type="button"
-												class="btn btn-info close-dong" style="margin-left: 10%"
-												onclick="location.href='${pageContext.request.contextPath}'">Đăng
-												ký</button>
+											<c:choose>
+												<c:when test="${check eq true}">
+													<button id="back" type="button"
+														class="btn btn-info close-dong" style="margin-left: 10%"
+														onclick="location.href='${pageContext.request.contextPath}/HuyQuanTamDeTai?idproject=${project.id }'">Hủy quan tâm</button>
+												</c:when>
+												<c:otherwise>
+													<button id="back" type="button"
+														class="btn btn-info close-dong" style="margin-left: 10%"
+														onclick="location.href='${pageContext.request.contextPath}/QuanTamDeTai?idproject=${project.id }'">Đăng ký</button>
+												</c:otherwise>
+											</c:choose>
 											<button id="back" type="button"
 												class="btn btn-info close-dong" style="margin-left: 20%"
 												onclick="location.href='${pageContext.request.contextPath}'">Quay
-												về </button>
+												về</button>
 										</c:if>
 										<c:if test="${account.student.team.id != null}">
 											<button id="back" type="button"
 												class="btn btn-info close-dong"
 												onclick="location.href='${pageContext.request.contextPath}'">Quay
-												về </button>
+												về</button>
 										</c:if>
 									</c:if> <c:if
 										test="${project.team.student.size() == 2 or account == null}">
 										<button id="back" type="button"
 											class="btn btn-info close-dong"
 											onclick="location.href='${pageContext.request.contextPath}'">Quay
-											về </button>
+											về</button>
 									</c:if></td>
 							</tr>
 						</tbody>

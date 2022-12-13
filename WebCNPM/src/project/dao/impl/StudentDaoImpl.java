@@ -27,6 +27,7 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 				IMajorService majorService = new MajorServiceImpl();
 				majorService.findMajorToStudent(id);
 				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
 				student.setFullname(rs.getString("FULLNAME"));
 				student.setMale(rs.getBoolean("MALE"));
 				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
@@ -53,6 +54,7 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 				Student student = new Student();
 				IMajorService majorService = new MajorServiceImpl();
 				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
 				student.setFullname(rs.getString("FULLNAME"));
 				student.setMale(rs.getBoolean("MALE"));
 				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
@@ -79,6 +81,7 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 				IMajorService majorService = new MajorServiceImpl();
 				majorService.findMajorToStudent(studentid);
 				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
 				student.setFullname(rs.getString("FULLNAME"));
 				student.setMale(rs.getBoolean("MALE"));
 				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
@@ -105,6 +108,7 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 				Student student = new Student();
 				IMajorService majorService = new MajorServiceImpl();
 				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
 				student.setFullname(rs.getString("FULLNAME"));
 				student.setMale(rs.getBoolean("MALE"));
 				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
@@ -116,6 +120,55 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 			e.printStackTrace();
 		}
 		return students;
+	}
+
+	@Override
+	public void insertToProject(String studentid, String projectid) {
+		String sql = "EXEC INS_STD_PRJ ?, ?";
+		try {
+			Connection con = super.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, studentid);
+			ps.setString(2, projectid);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean checkStdWithPrjCare(String studentid, String projectid) {
+		boolean duplicate = false;
+		String query = "select * from STD_PRJ where STUDENT = ? and PROJECT = ?";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, studentid);
+			ps.setString(2, projectid);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				duplicate = true;
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception ex) {
+		}
+		return duplicate;
+	}
+
+	@Override
+	public void deleteStdCarePrj(String studentid, String projectid) {
+		String sql = "EXEC DEL_STD_PRJ ?, ?";
+		try {
+			Connection con = super.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, studentid);
+			ps.setString(2, projectid);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
