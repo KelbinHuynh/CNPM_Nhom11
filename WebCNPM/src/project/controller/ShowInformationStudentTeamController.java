@@ -27,10 +27,11 @@ public class ShowInformationStudentTeamController extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		
 		out.println("<div class=\"forms__radio\">\r\n"
+				+ "										<label class=\"info_student\">Mã số sinh viên: "+student.getMssv() + "</label>\r\n"
 				+ "										<label class=\"info_student\">Họ và tên: "+student.getFullname() + "</label>\r\n"
 				+ "										<label class=\"info_student\">Chuyên ngành: "+student.getMajor().getName()+ "</label>\r\n"
 				+ "										<label class=\"info_student\">Ngày sinh: "+student.getDateofbirth()+"</label>\r\n"
-				+ "										<label class=\"info_student\">Ngày sinh: "+student.getPhonenumber()+"</label>\r\n");
+				+ "										<label class=\"info_student\">Số điện thoại: "+student.getPhonenumber()+"</label>\r\n");
 		if(student.isMale()) {
 			out.println("											<label class=\"info_student\">Giới tính: Nam</label>\r\n");
 		}
