@@ -18,6 +18,7 @@ public class WaitingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -27,7 +28,7 @@ public class WaitingController extends HttpServlet {
 			if (u.getRole() == 0) {
 				resp.sendRedirect(req.getContextPath());
 			} else if (u.getRole() == 1) {
-				resp.sendRedirect(req.getContextPath());
+				resp.sendRedirect(req.getContextPath() + "/lecturer");
 			} 
 			else if (u.getRole() == 2) {
 				resp.sendRedirect(req.getContextPath());

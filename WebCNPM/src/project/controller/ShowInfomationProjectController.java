@@ -17,8 +17,8 @@ import project.service.IStudentService;
 import project.service.impl.ProjectServiceImpl;
 import project.service.impl.StudentServiceImpl;
 
-@WebServlet(urlPatterns = { "/ChiTietDeTai" })
-public class ShowInfomationProjectController extends HttpServlet{
+@WebServlet(urlPatterns = { "/ChiTietDeTai", "/lecturer/ChiTietDeTai" })
+public class ShowInfomationProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	IProjectService projectService = new ProjectServiceImpl();
@@ -27,17 +27,26 @@ public class ShowInfomationProjectController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");
-		HttpSession session = req.getSession();
-		Account u = (Account) session.getAttribute("account");
 		String idproject = req.getParameter("id");
 		Project project = projectService.findOne(idproject);
-		boolean check = studentService.checkStdWithPrjCare(u.getStudent().getId(), idproject);
-		
+		boolean check = false;
+		boolean checkLecturer = false;
+		HttpSession session = req.getSession();
+		if (session != null && session.getAttribute("account") != null) {
+			Account u = (Account) session.getAttribute("account");
+			
+			if (u.getStudent() != null) {
+				check = studentService.checkStdWithPrjCare(u.getStudent().getId(), idproject);
+			}
+			if (u.getLecturer() != null) {
+				checkLecturer = true;
+			}
+		}
 		req.setAttribute("project", project);
 		req.setAttribute("check", check);
-		
+		req.setAttribute("checkLecturer", checkLecturer);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Views/projectinfo.jsp");
 		dispatcher.forward(req, resp);
 	}
-	
+
 }
