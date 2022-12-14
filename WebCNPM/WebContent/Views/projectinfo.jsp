@@ -16,11 +16,11 @@
 <title>Đăng Ký Đề Tài IT</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-<link rel="stylesheet" href="./Builder/css/main.css">
-<link rel="stylesheet" href="./Builder/css/responsive.css">
-<link rel="stylesheet" href="./Builder/css/grid.css">
-<link rel="stylesheet" href="./Builder/css/purchase.css">
-<link rel="stylesheet" href="./Builder/css/infoproject.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/main.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/responsive.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/grid.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/purchase.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/infoproject.css">
 
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
@@ -136,18 +136,20 @@
 							<tr>
 
 								<td colspan="2"><c:if
-										test="${account != null and (project.team.student.size() == null or project.team.student.size() == 1)}">
+										test="${account != null and (checkLecturer eq false) and (project.team.student.size() == null or project.team.student.size() == 1)}">
 										<c:if test="${account.student.team.id == null}">
 											<c:choose>
 												<c:when test="${check eq true}">
 													<button id="back" type="button"
 														class="btn btn-info close-dong" style="margin-left: 10%"
-														onclick="location.href='${pageContext.request.contextPath}/HuyQuanTamDeTai?idproject=${project.id }'">Hủy quan tâm</button>
+														onclick="location.href='${pageContext.request.contextPath}/HuyQuanTamDeTai?idproject=${project.id }'">Hủy
+														quan tâm</button>
 												</c:when>
 												<c:otherwise>
 													<button id="back" type="button"
 														class="btn btn-info close-dong" style="margin-left: 10%"
-														onclick="location.href='${pageContext.request.contextPath}/QuanTamDeTai?idproject=${project.id }'">Đăng ký</button>
+														onclick="location.href='${pageContext.request.contextPath}/QuanTamDeTai?idproject=${project.id }'">Đăng
+														ký</button>
 												</c:otherwise>
 											</c:choose>
 											<button id="back" type="button"
@@ -162,12 +164,17 @@
 												về</button>
 										</c:if>
 									</c:if> <c:if
-										test="${project.team.student.size() == 2 or account == null}">
+										test="${(project.team.student.size() == 2 or account == null) and checkLecturer eq false}">
 										<button id="back" type="button"
 											class="btn btn-info close-dong"
 											onclick="location.href='${pageContext.request.contextPath}'">Quay
 											về</button>
-									</c:if></td>
+									</c:if>
+									<c:if test="${checkLecturer eq true }"><button id="back" type="button"
+											class="btn btn-info close-dong"
+											onclick="location.href='${pageContext.request.contextPath}/lecturer'">Quay
+											về</button></c:if>
+									</td>
 							</tr>
 						</tbody>
 					</table>
@@ -177,8 +184,8 @@
 		</div>
 	</div>
 
-	<script src="./Builder/js/main.js" type="text/javascript"></script>
-	<script src="./Builder/js/purchase.js" type="text/javascript"></script>
-	<script src="./Builder/js/majorProject.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/main.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/purchase.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/majorProject.js" type="text/javascript"></script>
 </body>
 </html>

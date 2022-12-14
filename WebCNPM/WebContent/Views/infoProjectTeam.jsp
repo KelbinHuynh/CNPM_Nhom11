@@ -16,12 +16,12 @@
 <title>Đăng Ký Đề Tài IT</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-<link rel="stylesheet" href="./Builder/css/main.css">
-<link rel="stylesheet" href="./Builder/css/responsive.css">
-<link rel="stylesheet" href="./Builder/css/grid.css">
-<link rel="stylesheet" href="./Builder/css/purchase.css">
-<link rel="stylesheet" href="./Builder/css/infoproject.css">
-<link rel="stylesheet" href="./Builder/css/payment.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/main.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/responsive.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/grid.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/purchase.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/infoproject.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/payment.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
 	rel="stylesheet">
@@ -150,9 +150,9 @@
 		</div>
 	</div>
 
-	<script src="./Builder/js/main.js" type="text/javascript"></script>
-	<script src="./Builder/js/purchase.js" type="text/javascript"></script>
-	<script src="./Builder/js/userinfo.js" type="text/javascript"></script>
-	<script src="./Builder/js/majorProject.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/main.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/purchase.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/userinfo.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/majorProject.js" type="text/javascript"></script>
 </body>
 </html>
