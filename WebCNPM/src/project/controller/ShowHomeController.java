@@ -21,7 +21,7 @@ import project.service.impl.ProjectServiceImpl;
 import project.service.impl.StudentServiceImpl;
 import project.service.impl.TeamServiceImpl;
 
-@WebServlet(urlPatterns = {""})
+@WebServlet(urlPatterns = {"", "/lecturer"})
 public class ShowHomeController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 

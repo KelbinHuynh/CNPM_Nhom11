@@ -38,7 +38,8 @@
 		<div id="search">
 			<section class="purchase_page mb_20px ">
 				<div id="project_major">
-					<form action="${pageContext.request.contextPath }/DangKyDeTaiSV" class="form" method="POST">
+					<form action="${pageContext.request.contextPath }/DangKyDeTaiGV"
+						class="form" method="POST">
 						<div class=form__radios>
 							<h2>Tên đề tài</h2>
 							<input type="text" name="name" minlength="4" class="form__radio"
@@ -65,11 +66,20 @@
 						<div>
 							<h2>Giáo viên hướng dẫn</h2>
 							<div class="form__radios">
-								<select id="search_cn" class="form-control" name="gvhd">
-									<c:forEach items="${lecturerList }" var="lecturer">
-										<option value="${lecturer.id}">${lecturer.fullname}</option>
-									</c:forEach>
-								</select>
+								<input type="text" name="lecturer"
+									value="${account.lecturer.fullname}" class="form__radio"
+									disabled="disabled" />
+							</div>
+						</div>
+
+						<div>
+							<h2>Sinh viên trưởng nhóm</h2>
+							<div class="form__radios">
+								<input type="text" name="studentleader" id ="studentLeader"
+									class="form__radio"
+									placeholder="Nhập mã số sinh viên trưởng nhóm" oninput="infoStudentToSearch(this)"/>
+							</div>
+							<div class="form__radios" id="infoStudent">
 							</div>
 						</div>
 

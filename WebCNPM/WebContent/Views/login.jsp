@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" href="./Builder/css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/login.css">
 </head>
 <body>
 	<div class="wrapper">

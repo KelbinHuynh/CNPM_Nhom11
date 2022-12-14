@@ -170,5 +170,50 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 		}
 		
 	}
+
+	@Override
+	public void updateToStudent(Student student) {
+		String sql = "UPDATE STUDENT SET DATEOFBIRTH = ?, PHONENUMBER = ? WHERE ID = ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setDate(1, student.getDateofbirth());
+			ps.setString(2, student.getPhonenumber());
+			ps.setString(3,student.getId());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public List<Student> findStudentToKey(String key) {
+		List<Student> studentList = new ArrayList<Student>();
+		String sql = "SELECT * FROM STUDENT WHERE [MSSV] LIKE ?";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + key + "%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Student student = new Student();
+				IMajorService majorService = new MajorServiceImpl();
+				majorService.findMajorToStudent(rs.getString("ID"));
+				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
+				student.setFullname(rs.getString("FULLNAME"));
+				student.setMale(rs.getBoolean("MALE"));
+				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
+				student.setPhonenumber(rs.getString("PHONENUMBER"));
+				student.setMajor(majorService.findMajorToStudent(rs.getString("ID")));
+				
+				studentList.add(student);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return studentList;
+	}
 	
 }

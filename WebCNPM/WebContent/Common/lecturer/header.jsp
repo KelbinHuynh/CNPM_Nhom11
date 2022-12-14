@@ -68,7 +68,6 @@
 					<div class="l-4 hide-on-tablet-moblie">
 						<ul class="header_nav_container--list">
 							<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-							<li><a href="${pageContext.request.contextPath}/information">Trang cá nhân</a></li>
 						</ul>
 					</div>
 					

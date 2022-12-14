@@ -11,8 +11,8 @@
     <decorator name="shipper" page="shipper.jsp">
         <pattern>/shipper*</pattern>
     </decorator>
-    <decorator name="user" page="userdec.jsp">
-        <pattern>/user*</pattern>
+    <decorator name="lecturer" page="lecturer.jsp">
+        <pattern>/lecturer*</pattern>
     </decorator>
     <decorator name="web" page="web.jsp">
         <pattern>/*</pattern>

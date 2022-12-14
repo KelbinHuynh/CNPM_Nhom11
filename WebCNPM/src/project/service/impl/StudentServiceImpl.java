@@ -48,5 +48,16 @@ public class StudentServiceImpl implements IStudentService{
 		
 	}
 
+	@Override
+	public void updateToStudent(Student student) {
+		studentDao.updateToStudent(student);
+		
+	}
+
+	@Override
+	public List<Student> findStudentToKey(String key) {
+		return studentDao.findStudentToKey(key);
+	}
+
 
 }

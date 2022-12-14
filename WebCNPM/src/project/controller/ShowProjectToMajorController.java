@@ -33,14 +33,15 @@ public class ShowProjectToMajorController extends HttpServlet {
 			quantityProject = projectService.countAllProject();
 		}
 		PrintWriter out = resp.getWriter();
-
-		for (Project project : projectList) {
-			int stt = (Integer.parseInt(project.getId()) + 1);
-			out.println("<div class=\"navbar_purchase d-flex\">\r\n"
+		
+		out.println("<div class=\"navbar_purchase d-flex\">\r\n"
 					+ "						<div class=\"navbar_purchase--title \">Tổng Số Đề Tài: "+quantityProject+"\r\n"
 					+ "							</div>\r\n"
 					+ "						<div class=\"navbar_purchase--filter d-flex\"></div>\r\n"
-					+ "					</div>" + "<div class=\"order_purchase\">\r\n"
+					+"					</div>" );
+		for (Project project : projectList) {
+			int stt = (Integer.parseInt(project.getId()) + 1);
+			out.println("<div class=\"order_purchase\">\r\n"
 					+ "						<div class=\"purchase_tabcontent\" id=\"purchase_tabcontent--my\">"
 					+ "<div class=\"purchase_item\" style=\"margin-bottom: 20px;\">\r\n"
 					+ "									<div class=\"purchase_item--order\">\r\n"

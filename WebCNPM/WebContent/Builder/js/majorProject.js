@@ -28,3 +28,35 @@ function showinfo(studentid){
 		error: function(xhr) { }
 	})
 };
+
+function infoStudentToSearch(param){
+	$.ajax({
+		url: "/WebCNPM/InformationUserToSearch",
+		type: "get",
+		data: {
+			exist: param.value
+		},
+		success: function(data) {
+			var row = document.getElementById("infoStudent");
+			row.innerHTML = data;
+		},
+		error: function(xhr) { }
+	})
+}
+
+function acceptStudentLeader(mssv){
+	$("#studentLeader").val(mssv);
+	$.ajax({
+		url: "/WebCNPM/InformationUserToSearch",
+		type: "get",
+		data: {
+			exist: mssv
+		},
+		success: function(data) {
+			var row = document.getElementById("infoStudent");
+			row.innerHTML = data;
+		},
+		error: function(xhr) { }
+	})
+}
+

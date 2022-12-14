@@ -16,7 +16,7 @@
 		<li><a href="${pageContext.request.contextPath}/user/changepass"><div class="icon">
 					<i class="fa-solid fa-chalkboard-user"></i>
 				</div> <span>Thông tin giảng viên</span></a></li>
-		<li><a href="${pageContext.request.contextPath}/user/purchase"><div class="icon">
+		<li><a href="${pageContext.request.contextPath}/information"><div class="icon">
 					<i class="fa-solid fa-graduation-cap"></i>
 				</div> <span>Thông tin sinh viên</span></a></li>
 		<c:if test="${account.student.fullname != null and account.student.team.id == null}">
@@ -29,10 +29,6 @@
 					<i class="fa-solid fa-file-signature"></i>
 				</div> <span>Quản lý team</span></a></li>	
 		</c:if>
-		<c:if test="${account.lecturer.fullname != null}">
-			<li><a href="${pageContext.request.contextPath}/DangKyDeTai"><div class="icon">
-					<i class="fa-solid fa-file-signature"></i>
-				</div> <span>Đăng ký đề tài</span></a></li>	
-		</c:if>
+		
 	</ul>
 </nav>

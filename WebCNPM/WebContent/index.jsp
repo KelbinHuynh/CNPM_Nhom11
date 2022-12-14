@@ -83,8 +83,16 @@
 												</a>
 											</div>
 											<div class="purchase_item--order--total"></div>
-											<button onclick="location.href='${pageContext.request.contextPath}/ChiTietDeTai?id=${project.id}'"
+											<c:choose>
+												<c:when test="${account != null and account.lecturer != null }">
+													<button onclick="location.href='${pageContext.request.contextPath}/lecturer/ChiTietDeTai?id=${project.id}'"
 												class="btn btn_confirm">Thông tin đề tài</button>
+												</c:when>
+												<c:otherwise>
+													<button onclick="location.href='${pageContext.request.contextPath}/ChiTietDeTai?id=${project.id}'"
+												class="btn btn_confirm">Thông tin đề tài</button>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>
