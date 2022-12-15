@@ -16,12 +16,18 @@
 <title>Đăng Ký Đề Tài IT</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/main.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/responsive.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/grid.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/purchase.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/infoproject.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Builder/css/payment.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/main.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/responsive.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/grid.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/purchase.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/infoproject.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/Builder/css/payment.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
 	rel="stylesheet">
@@ -38,8 +44,17 @@
 		<div id="search">
 			<section class="purchase_page mb_20px ">
 				<div id="project_major">
-					<form action="${pageContext.request.contextPath }/DangKyDeTaiGV"
+					<form
+						action="${pageContext.request.contextPath }/lecturer/DangKyDeTaiGV"
 						class="form" method="POST">
+						<c:if test = "${thongbao != null }">
+							<div class=form__radios>
+							<h2>Thông báo</h2>
+							<input type="text" name="thongbao" minlength="4" class="form__radio"
+								 aria-describedby="helpId" value="${thongbao}" disabled="disabled">
+							</div>
+						</c:if>
+						
 						<div class=form__radios>
 							<h2>Tên đề tài</h2>
 							<input type="text" name="name" minlength="4" class="form__radio"
@@ -54,12 +69,9 @@
 						<div>
 							<h2>Chuyên ngành</h2>
 							<div class="form__radios">
-								<c:forEach items="${majorList }" var="major">
-									<div class="form__radio">
-										<label>${major.name}</label> <input type="radio"
-											name="major-name" value="${major.id}" />
-									</div>
-								</c:forEach>
+								<input type="text" name="lecturer"
+									value="${account.lecturer.major.name}" class="form__radio"
+									disabled="disabled" />
 							</div>
 						</div>
 
@@ -75,12 +87,12 @@
 						<div>
 							<h2>Sinh viên trưởng nhóm</h2>
 							<div class="form__radios">
-								<input type="text" name="studentleader" id ="studentLeader"
+								<input type="text" name="studentleader" id="studentLeader"
 									class="form__radio"
-									placeholder="Nhập mã số sinh viên trưởng nhóm" oninput="infoStudentToSearch(this)"/>
+									placeholder="Nhập mã số sinh viên trưởng nhóm"
+									oninput="infoStudentToSearch(this)" />
 							</div>
-							<div class="form__radios" id="infoStudent">
-							</div>
+							<div class="form__radios" id="infoStudent"></div>
 						</div>
 
 						<div>
@@ -93,8 +105,12 @@
 		</div>
 	</div>
 
-	<script src="${pageContext.request.contextPath}/Builder/js/main.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/Builder/js/purchase.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/Builder/js/majorProject.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/main.js"
+		type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/Builder/js/purchase.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/Builder/js/majorProject.js"
+		type="text/javascript"></script>
 </body>
 </html>

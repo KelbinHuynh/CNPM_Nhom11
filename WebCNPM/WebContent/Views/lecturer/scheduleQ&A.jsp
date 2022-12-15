@@ -35,18 +35,10 @@
 <body>
 	<div id="main">
 		<div id="search">
-			<select id="search_cn" class="form-control text-center"
-				onchange="loadProjectToMajor(this);">
-				<option value="-1" selected>Tất cả chuyên ngành</option>
-				<c:forEach items="${majorList }" var="major">
-					<option value="${major.id}">${major.name}</option>
-				</c:forEach>
-			</select>
 			<section class="purchase_page mb_20px ">
 				<div id="project_major">
 					<div class="navbar_purchase d-flex">
-						<div class="navbar_purchase--title ">Tổng Số Đề Tài:
-							${countP}</div>
+						<div class="navbar_purchase--title "></div>
 						<div class="navbar_purchase--filter d-flex"></div>
 					</div>
 
@@ -84,39 +76,12 @@
 												</a>
 											</div>
 											<div class="purchase_item--order--total"></div>
-											<c:choose>
-												<c:when
-													test="${account != null and account.lecturer != null }">
-													<button
-														onclick="location.href='${pageContext.request.contextPath}/lecturer/ChiTietDeTai?id=${project.id}'"
+											<button onclick="location.href='${pageContext.request.contextPath}/lecturer/ChiTietDeTai?id=${project.id}'"
 														class="btn btn_confirm">Thông tin đề tài</button>
-												</c:when>
-												<c:otherwise>
-													<button
-														onclick="location.href='${pageContext.request.contextPath}/ChiTietDeTai?id=${project.id}'"
-														class="btn btn_confirm">Thông tin đề tài</button>
-												</c:otherwise>
-											</c:choose>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
-
-							<div class="product_indicators" style="text-align: center">
-								<c:if test="${tag>1}">
-									<button class="prev"
-										onclick="location.href='${pageContext.request.contextPath }?index=${tag-8}'">&#10094;</button>
-								</c:if>
-								<c:forEach begin="1" end="${endP}" var="i">
-									<button id='slick-dot'
-										class='${tag==(8*(i-1)+1)?"active_product":"" } '
-										onclick="location.href='${pageContext.request.contextPath}?index=${8*(i-1)+1}'">${i}</button>
-								</c:forEach>
-								<c:if test="${((tag-1)/8+1)<endP}">
-									<button class="next"
-										onclick="location.href='${pageContext.request.contextPath}?index=${tag+8}'">&#10095;</button>
-								</c:if>
-							</div>
 						</div>
 					</div>
 				</div>

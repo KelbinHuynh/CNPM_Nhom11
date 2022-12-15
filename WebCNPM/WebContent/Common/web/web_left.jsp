@@ -13,9 +13,6 @@
 		<li><a href="${pageContext.request.contextPath}/"><div class="icon">
 					<i class="fa-sharp fa-solid fa-calendar-week"></i>
 				</div> <span>Danh sách đề tài</span></a></li>
-		<li><a href="${pageContext.request.contextPath}/user/changepass"><div class="icon">
-					<i class="fa-solid fa-chalkboard-user"></i>
-				</div> <span>Thông tin giảng viên</span></a></li>
 		<li><a href="${pageContext.request.contextPath}/information"><div class="icon">
 					<i class="fa-solid fa-graduation-cap"></i>
 				</div> <span>Thông tin sinh viên</span></a></li>

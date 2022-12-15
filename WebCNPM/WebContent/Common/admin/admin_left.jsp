@@ -11,8 +11,7 @@
 	data-kt-drawer-toggle="#kt_aside_mobile_toggle">
 	<div class="aside-logo flex-column-auto" id="kt_aside_logo">
 		<a href="${pageContext.request.contextPath}/admin"> 
-		<c:url value="/image?fname=logo.png" var="imgUrl" />
-		<img alt="Logo" src="${imgUrl}" class="h-40px logo">
+		
 		</a>
 		<div id="kt_aside_toggle"
 			class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
@@ -243,7 +242,7 @@
 				</div>
 
 				<div class="menu-item">
-					<a class="menu-link" href="${pageContext.request.contextPath}/admin/account"> <span
+					<a class="menu-link" href="${pageContext.request.contextPath}/admin/user"> <span
 						class="menu-icon"> <i class="bi bi-people-fill fs-2"></i>
 					</span> <span class="menu-title">Danh sách tài khoản</span>
 					</a>

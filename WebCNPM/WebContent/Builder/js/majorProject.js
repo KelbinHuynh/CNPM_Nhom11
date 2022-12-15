@@ -60,3 +60,21 @@ function acceptStudentLeader(mssv){
 	})
 }
 
+function loadAdminAccountAdd() {
+	$.ajax({
+		url: "/WebCNPM/admin/user/add",
+		type: "get",
+		data: {
+			exist: userid
+		},
+		success: function(data) {
+			var row = document.getElementById("content");
+			row.innerHTML += data;
+			$(".closed-dongs").click(function() {
+				$("div").remove(".showed");
+			});
+
+		},
+		error: function(xhr) { }
+	})
+};
