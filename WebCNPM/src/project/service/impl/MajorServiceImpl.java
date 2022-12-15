@@ -22,5 +22,9 @@ public class MajorServiceImpl implements IMajorService{
 	public Major findMajorToStudent(String idstu) {
 		return majorDao.findMajorToStudent(idstu);
 	}
+	@Override
+	public Major findMajorToLecturer(String idle) {
+		return majorDao.findMajorToLecturer(idle);
+	}
 
 }

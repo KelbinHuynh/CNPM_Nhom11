@@ -8,9 +8,6 @@
     <decorator name="admin" page="admin.jsp">
         <pattern>/admin*</pattern>
     </decorator>
-    <decorator name="shipper" page="shipper.jsp">
-        <pattern>/shipper*</pattern>
-    </decorator>
     <decorator name="lecturer" page="lecturer.jsp">
         <pattern>/lecturer*</pattern>
     </decorator>

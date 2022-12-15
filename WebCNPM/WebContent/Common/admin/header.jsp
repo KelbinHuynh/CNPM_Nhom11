@@ -18,8 +18,7 @@
 
 		<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 			<a href="${pageContext.request.contextPath}/admin" class="d-lg-none"> 
-				<c:url value="/image?fname=logo.png" var="imgUrl" />
-				<img alt="Logo" src="${imgUrl }" class="h-15px">
+				
 			</a>
 		</div>
 		<div
@@ -59,9 +58,6 @@
 							class="topbar-item cursor-pointer symbol px-3 px-lg-5 me-n3 me-lg-n5 symbol-30px symbol-md-35px"
 							data-kt-menu-trigger="click" data-kt-menu-attach="parent"
 							data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
-							<c:url value="/image?fname=${account.avatar}" var="imgUrl" />
-							<img
-								src="${imgUrl}" alt="avatar">
 						</div>
 						<div
 							class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold py-4 fs-6 w-275px"
@@ -69,15 +65,13 @@
 							<div class="menu-item px-3">
 								<div class="menu-content d-flex align-items-center px-3">
 									<div class="symbol symbol-50px me-5">
-										<c:url value="/image?fname=${account.avatar}" var="imgUrl" />
-										<img src="${imgUrl}" alt="avatar">
 									</div>
 									<div class="d-flex flex-column">
 										<div
 											class="fw-bolder d-flex align-items-center fs-5 limit_email_name"
 											data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-											data-bs-original-title="${account.email }">
-											${account.lastname } ${account.firstname}</div>
+											data-bs-original-title="${account.admin.fullname }">
+											${account.admin.fullname}</div>
 										<a class="fw-bold text-muted text-hover-primary fs-7">Quản
 											trị viên</a>
 									</div>
@@ -90,7 +84,7 @@
 
 
 							<div class="menu-item px-5">
-								<a href="${pageContext.request.contextPath}/admin/order" class="menu-link px-5">Về
+								<a href="${pageContext.request.contextPath}/admin" class="menu-link px-5">Về
 									trang chủ</a>
 							</div>
 

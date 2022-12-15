@@ -32,14 +32,30 @@ public class ShowHomeController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 		List<Major> majorList = majorService.findAll();
-		List<Project> projectList = projectService.findAll();
-		int quantity = projectService.countAllProject();
-
+		String indexPage = req.getParameter("index");
+		if (indexPage == null) {
+			indexPage = "1";
+		}
+		
+		int indexp = Integer.parseInt(indexPage);
+		int countP;
+		int endPage;
+		
+		countP = projectService.countAllProject();
+		endPage = countP / 8;
+		if (countP % 8 != 0) {
+			endPage++;
+		}
+		
+		List<Project> projectList = projectService.findAllPage(indexp - 1);
+		
+		req.setAttribute("endP", endPage);
+		req.setAttribute("tag", indexp);
 		req.setAttribute("projectList", projectList);
 		req.setAttribute("majorList", majorList);
-		req.setAttribute("quantityProject", quantity);
+		req.setAttribute("countP", countP);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
 		dispatcher.forward(req, resp);

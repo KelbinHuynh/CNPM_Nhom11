@@ -17,7 +17,7 @@ import project.service.impl.LecturerServiceImpl;
 import project.service.impl.MajorServiceImpl;
 import project.service.impl.TeamServiceImpl;
 
-public class ProjectDaoImpl extends DBConnection implements IProjectDao{
+public class ProjectDaoImpl extends DBConnection implements IProjectDao {
 
 	@Override
 	public List<Project> findAll() {
@@ -32,7 +32,7 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 				Major major = majorService.findOne(rs.getString("ID"));
 				ILecturerService lecturerService = new LecturerServiceImpl();
 				ITeamService teamService = new TeamServiceImpl();
-				
+
 				Project project = new Project();
 				project.setId(rs.getString("ID"));
 				project.setName(rs.getString("NAME"));
@@ -57,8 +57,8 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 	public List<Project> findAllToMajor(String idmajor) {
 		List<Project> projects = findAll();
 		List<Project> projectToMajor = new ArrayList<Project>();
-		for(Project project : projects) {
-			if(project.getMajor().getId().equals(idmajor)) {
+		for (Project project : projects) {
+			if (project.getMajor().getId().equals(idmajor)) {
 				projectToMajor.add(project);
 			}
 		}
@@ -143,7 +143,7 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -232,13 +232,128 @@ public class ProjectDaoImpl extends DBConnection implements IProjectDao{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project.getName());
 			ps.setString(2, project.getDetails());
-			ps.setString(3,project.getId());
+			ps.setString(3, project.getId());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	@Override
+	public List<Project> findAllPageProjectToMajor(String idmajor, int indexp) {
+		List<Project> projects = new ArrayList<Project>();
+		List<Project> projectToMajor = new ArrayList<Project>();
+		String sql = "SELECT * FROM PROJECT LEFT JOIN TEAM_PRJ ON PROJECT.ID = TEAM_PRJ.PROJECT ORDER BY PROJECT.ID ASC OFFSET ? rows fetch next 8 rows only ";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, indexp);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				IMajorService majorService = new MajorServiceImpl();
+				Major major = majorService.findOne(rs.getString("ID"));
+				ILecturerService lecturerService = new LecturerServiceImpl();
+				ITeamService teamService = new TeamServiceImpl();
+
+				Project project = new Project();
+				project.setId(rs.getString("ID"));
+				project.setName(rs.getString("NAME"));
+				project.setDetails(rs.getString("DETAILS"));
+				project.setCompletion_time(rs.getDate("COMPLETION_TIME"));
+				project.setIs_graduate(rs.getBoolean("IS_GRADUATE"));
+				project.setScore(rs.getFloat("SCORE"));
+				project.setProtecte(rs.getBoolean("PROTECTED"));
+				project.setMajor(major);
+				project.setLecturer(lecturerService.findProjectOne(rs.getString("ID")));
+				project.setTeam(teamService.findTeamToProject(rs.getString("ID")));
+
+				projects.add(project);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for (Project project : projects) {
+			if (project.getMajor().getId().equals(idmajor)) {
+				projectToMajor.add(project);
+			}
+		}
+		return projectToMajor;
+	}
+
+	@Override
+	public List<Project> findAllPage(int indexp) {
+		List<Project> projects = new ArrayList<Project>();
+		String sql = "SELECT * FROM PROJECT LEFT JOIN TEAM_PRJ ON PROJECT.ID = TEAM_PRJ.PROJECT ORDER BY PROJECT.ID ASC OFFSET ? rows fetch next 8 rows only ";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, indexp);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				IMajorService majorService = new MajorServiceImpl();
+				Major major = majorService.findOne(rs.getString("ID"));
+				ILecturerService lecturerService = new LecturerServiceImpl();
+				ITeamService teamService = new TeamServiceImpl();
+
+				Project project = new Project();
+				project.setId(rs.getString("ID"));
+				project.setName(rs.getString("NAME"));
+				project.setDetails(rs.getString("DETAILS"));
+				project.setCompletion_time(rs.getDate("COMPLETION_TIME"));
+				project.setIs_graduate(rs.getBoolean("IS_GRADUATE"));
+				project.setScore(rs.getFloat("SCORE"));
+				project.setProtecte(rs.getBoolean("PROTECTED"));
+				project.setMajor(major);
+				project.setLecturer(lecturerService.findProjectOne(rs.getString("ID")));
+				project.setTeam(teamService.findTeamToProject(rs.getString("ID")));
+
+				projects.add(project);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return projects;
+	}
+
+	@Override
+	public List<Project> findProjectOfLecturer(String lecturerid) {
+		List<Project> projects = findAll();
+		List<Project> projectOfLecturer = new ArrayList<Project>();
+		for (Project project : projects) {
+			if (project.getLecturer().getId().equals(lecturerid)) {
+				projectOfLecturer.add(project);
+			}
+		}
+		return projectOfLecturer;
 	}
 	
-}
+//	public static void main(String[] args){
+//		IProjectDao projectDao = new ProjectDaoImpl();
+//		List<Project> projects = projectDao.findAll();
+//		for(Project project: projects) {
+//			System.out.println(project.getLecturer().getId());
+//		}
+//	
+//	}
 
+	@Override
+	public int countProjectOfLecturer(String lecturerid) {
+		String sql = "SELECT count(*) FROM LEC_PRJ INNER JOIN PROJECT ON PROJECT.ID = LEC_PRJ.PROJECT WHERE LEC_PRJ.LECTURER = ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, lecturerid);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+}

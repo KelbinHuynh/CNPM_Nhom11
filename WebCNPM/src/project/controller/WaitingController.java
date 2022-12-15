@@ -26,7 +26,7 @@ public class WaitingController extends HttpServlet {
 			Account u = (Account) session.getAttribute("account");
 			req.setAttribute("username", u.getUsername());
 			if (u.getRole() == 0) {
-				resp.sendRedirect(req.getContextPath());
+				resp.sendRedirect(req.getContextPath() + "/admin/user");
 			} else if (u.getRole() == 1) {
 				resp.sendRedirect(req.getContextPath() + "/lecturer");
 			} 

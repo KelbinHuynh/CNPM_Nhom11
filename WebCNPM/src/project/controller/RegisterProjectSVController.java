@@ -68,7 +68,7 @@ public class RegisterProjectSVController extends HttpServlet{
 		
 		projectService.insertPRJ_MAJ(projectList.get(idx).getId(), majorid);
 		projectService.insertLEC_PRJ(idlecturer, projectList.get(idx).getId());
-		
+		 
 		Team team = new Team();
 		team.setLeader(u.getStudent().getId());
 		teamService.insertTeam(team);
@@ -77,7 +77,7 @@ public class RegisterProjectSVController extends HttpServlet{
 		int idxteam = teamList.size() - 1;
 		teamService.insertSTD_TEAM(u.getStudent().getId(), teamList.get(idxteam).getId());
 		projectService.insertTEAM_PRJ(projectList.get(idx).getId(), teamList.get(idxteam).getId());
-		
+		u.getStudent().setTeam(teamList.get(idxteam));
 		resp.sendRedirect(req.getContextPath());
 		
 	}

@@ -5,6 +5,7 @@ public class Lecturer {
 	private String fullname;
 	private boolean male;
 	private String level;
+	private Major major;
 	public String getId() {
 		return id;
 	}
@@ -29,4 +30,11 @@ public class Lecturer {
 	public void setLevel(String lever) {
 		this.level = lever;
 	}
+	public Major getMajor() {
+		return major;
+	}
+	public void setMajor(Major major) {
+		this.major = major;
+	}
+	
 }

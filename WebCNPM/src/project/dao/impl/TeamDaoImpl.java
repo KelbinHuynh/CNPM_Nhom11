@@ -110,5 +110,31 @@ public class TeamDaoImpl extends DBConnection implements ITeamDao{
 		}
 		return team;
 	}
+
+	@Override
+	public List<Team> findTeamToTkb(String idtkb) {
+		List<Team> teamList = new ArrayList<Team>();
+		String sql = "SELECT * FROM TEAM INNER JOIN TEAM_TKB ON TEAM.ID = TEAM_TKB.TEAM WHERE TEAM_TKB.TKB = ?";
+		
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, idtkb);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Team team = new Team();
+				IStudentService studentService = new StudentServiceImpl();			
+				team.setId(rs.getString("ID"));
+				team.setLeader(rs.getString("LEADER"));
+				team.setStudent(studentService.findStudentToTeam(rs.getString("ID")));
+				
+				teamList.add(team);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return teamList;
+	}
 	
 }
