@@ -57,5 +57,21 @@ public class ProjectServiceImpl implements IProjectService{
 		projectDao.updateProject(project);
 		
 	}
+	@Override
+	public List<Project> findAllPageProjectToMajor(String idmajor, int indexp) {
+		return projectDao.findAllPageProjectToMajor(idmajor, indexp);
+	}
+	@Override
+	public List<Project> findAllPage(int indexp) {
+		return projectDao.findAllPage(indexp);
+	}
+	@Override
+	public List<Project> findProjectOfLecturer(String lecturerid) {
+		return projectDao.findProjectOfLecturer(lecturerid);
+	}
+	@Override
+	public int countProjectOfLecturer(String lecturerid) {
+		return projectDao.countProjectOfLecturer(lecturerid);
+	}
 
 }

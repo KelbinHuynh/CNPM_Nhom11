@@ -10,4 +10,5 @@ public interface ITeamDao {
 	void insertTeam(Team team);
 	void insertSTD_TEAM(String idstd, String idteam);
 	Team findTeamToStudent(String idstd);
+	List<Team> findTeamToTkb(String idtkb);
 }

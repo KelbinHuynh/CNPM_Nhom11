@@ -8,4 +8,5 @@ public interface ILecturerDao {
 	Lecturer findaccount(String id);
 	Lecturer findProjectOne(String idproject);
 	List<Lecturer> findAll();
+	List<Lecturer> findLecturerToTKB(String tkbid);
 }

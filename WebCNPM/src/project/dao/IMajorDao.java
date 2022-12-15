@@ -8,5 +8,6 @@ public interface IMajorDao {
 	List<Major> findAll();
 	Major findOne(String id);
 	Major findMajorToStudent(String idstu);
+	Major findMajorToLecturer(String idle);
 }
 

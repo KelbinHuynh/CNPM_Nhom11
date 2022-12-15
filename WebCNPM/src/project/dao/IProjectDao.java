@@ -8,8 +8,12 @@ import project.model.Project;
 public interface IProjectDao {
 	List<Project> findAll();
 	List<Project> findAllToMajor(String idmajor);
+	List<Project> findAllPageProjectToMajor(String idmajor, int indexp);
+	List<Project> findAllPage(int indexp);
+	List<Project> findProjectOfLecturer(String lecturerid);
 	int countAllProject();
 	int countProjectToMajor(String idmajor);
+	int countProjectOfLecturer(String lecturerid);
 	Project findOne(String projectId);
 	Project findProjectToTeam(String idteam);
 	void insertProject(Project project);

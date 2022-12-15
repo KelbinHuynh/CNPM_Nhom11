@@ -4,7 +4,8 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import Connection.DBConnection;
 import project.dao.IAccountDao;
@@ -71,6 +72,38 @@ public class AccountDaoImpl extends DBConnection implements IAccountDao{
 		} catch (Exception ex) {
 		}
 		return duplicate;
+	}
+
+	@Override
+	public List<Account> findAll() {
+		List<Account> accountList = new ArrayList<Account>();
+		String sql = "SELECT * FROM ACCOUNT";
+		try {
+			conn = new DBConnection().getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {				
+				Account account = new Account();
+				IStudentService stservice = new StudentServiceImpl();
+				account.setStudent(stservice.findaccount(rs.getString("ID")));
+				
+				ILecturerService leservice = new LecturerServiceImpl();
+				account.setLecturer(leservice.findaccount(rs.getString("ID")));
+				
+				IAdminService adservice = new AdminServiceImpl();
+				account.setAdmin(adservice.findaccount(rs.getString("ID")));
+				
+				account.setId(rs.getString("ID"));
+				account.setUsername(rs.getString("USERNAME"));
+				account.setPassword(rs.getString("PASSWORD"));
+				account.setRole(rs.getInt("ROLE"));
+				
+				accountList.add(account);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return accountList;
 	}
 	
 	

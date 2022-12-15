@@ -74,4 +74,24 @@ public class MajorDaoImpl extends DBConnection implements IMajorDao{
 		return null;
 	}
 
+	@Override
+	public Major findMajorToLecturer(String idle) {
+		String sql = "SELECT * FROM MAJOR INNER JOIN LEC_MAJ ON MAJOR.ID = LEC_MAJ.MAJOR WHERE LEC_MAJ.LECTURER = ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, idle);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Major major = new Major();
+				major.setId(rs.getString("ID"));
+				major.setName(rs.getString("NAME"));
+				return major;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

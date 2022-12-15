@@ -14,4 +14,6 @@ public interface IStudentDao {
 	void deleteStdCarePrj(String studentid, String projectid);
 	boolean checkStdWithPrjCare(String studentid, String projectid);
 	void updateToStudent(Student student);
+	boolean checkStudent(String studentid);
+	Student findStudentToMSSV(String mssv);
 }

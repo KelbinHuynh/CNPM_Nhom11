@@ -215,5 +215,51 @@ public class StudentDaoImpl extends DBConnection implements IStudentDao{
 		}
 		return studentList;
 	}
+
+	@Override
+	public boolean checkStudent(String studentid) {
+		boolean duplicate = false;
+		String query = "select * from STUDENT where MSSV = ?";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, studentid);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				duplicate = true;
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception ex) {
+		}
+		return duplicate;
+	}
+
+	@Override
+	public Student findStudentToMSSV(String mssv) {
+		String sql = "SELECT * FROM STUDENT WHERE MSSV = ?";
+		try {
+			Connection conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, mssv);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Student student = new Student();
+				IMajorService majorService = new MajorServiceImpl();
+				majorService.findMajorToStudent(rs.getString("ID"));
+				student.setId(rs.getString("ID"));
+				student.setMssv(rs.getString("MSSV"));
+				student.setFullname(rs.getString("FULLNAME"));
+				student.setMale(rs.getBoolean("MALE"));
+				student.setDateofbirth(rs.getDate("DATEOFBIRTH"));
+				student.setPhonenumber(rs.getString("PHONENUMBER"));
+				student.setMajor(majorService.findMajorToStudent(rs.getString("ID")));
+				return student;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

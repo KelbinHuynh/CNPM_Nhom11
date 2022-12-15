@@ -1,5 +1,7 @@
 package project.service.impl;
 
+import java.util.List;
+
 import project.dao.IAccountDao;
 import project.dao.impl.AccountDaoImpl;
 import project.model.Account;
@@ -27,6 +29,12 @@ public class AccountServiceImpl implements IAccountService{
 	@Override
 	public Account findbyUsername(String username) {
 		return accountDao.findbyUsername(username);
+	}
+
+
+	@Override
+	public List<Account> findAll() {
+		return accountDao.findAll();
 	}
 
 

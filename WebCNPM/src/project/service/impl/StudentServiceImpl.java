@@ -59,5 +59,15 @@ public class StudentServiceImpl implements IStudentService{
 		return studentDao.findStudentToKey(key);
 	}
 
+	@Override
+	public boolean checkStudent(String studentid) {
+		return studentDao.checkStudent(studentid);
+	}
+
+	@Override
+	public Student findStudentToMSSV(String mssv) {
+		return studentDao.findStudentToMSSV(mssv);
+	}
+
 
 }

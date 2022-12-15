@@ -36,5 +36,10 @@ public class TeamServiceImpl implements ITeamService{
 	public Team findTeamToStudent(String idstd) {
 		return teamDao.findTeamToStudent(idstd);
 	}
+
+	@Override
+	public List<Team> findTeamToTkb(String idtkb) {
+		return teamDao.findTeamToTkb(idtkb);
+	}
 	
 }

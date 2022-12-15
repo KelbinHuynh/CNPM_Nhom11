@@ -26,5 +26,12 @@ public class LecturerServiceImpl implements ILecturerService{
 		return lecturerDao.findAll();
 	}
 
+	@Override
+	public List<Lecturer> findLecturerToTKB(String tkbid) {
+		return lecturerDao.findLecturerToTKB(tkbid);
+	}
+
+
+
 
 }

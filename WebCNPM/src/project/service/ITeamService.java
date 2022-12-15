@@ -10,5 +10,6 @@ public interface ITeamService {
 	void insertSTD_TEAM(String idstd, String idteam);
 	List<Team> findAll();
 	Team findTeamToStudent(String idstd);
+	List<Team> findTeamToTkb(String idtkb);
 }
 

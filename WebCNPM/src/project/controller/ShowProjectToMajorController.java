@@ -9,14 +9,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import project.model.Account;
 import project.model.Project;
 import project.service.IMajorService;
 import project.service.IProjectService;
 import project.service.impl.MajorServiceImpl;
 import project.service.impl.ProjectServiceImpl;
 
-@WebServlet(urlPatterns = { "/DanhSach" })
+@WebServlet(urlPatterns = { "/DanhSach"})
 public class ShowProjectToMajorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	IMajorService majorService = new MajorServiceImpl();
@@ -26,6 +28,8 @@ public class ShowProjectToMajorController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");
 		String idmajor = req.getParameter("exist");
+		HttpSession session = req.getSession();
+		Account u = (Account) session.getAttribute("account");
 		List<Project> projectList = projectService.findAllToMajor(idmajor);
 		int quantityProject = projectService.countProjectToMajor(idmajor);
 		if (idmajor.equals("-1")) {
@@ -78,10 +82,19 @@ public class ShowProjectToMajorController extends HttpServlet {
 					+ "														</div>\r\n"
 					+ "											<div class=\"purchase_item--order--total\">\r\n"
 					+ "												\r\n"
-					+ "											</div>\r\n"
-					+ "											<button onclick=\"location.href='/WebCNPM/ChiTietDeTai?id="+project.getId()+"'\"\r\n"
-					+ "												class=\"btn btn_confirm\">Thông tin đề tài</button>\r\n"
-					+ "										</div>\r\n" + "									</div>\r\n"
+					+ "											</div>\r\n");
+			if(u == null) {
+				out.println("											<button onclick=\"location.href='/WebCNPM/ChiTietDeTai?id="+project.getId()+"'\"\r\n"
+						+ "												class=\"btn btn_confirm\">Thông tin đề tài</button>\r\n");
+			}
+			else if(u.getLecturer() != null){
+				out.println("											<button onclick=\"location.href='/WebCNPM/lecturer/ChiTietDeTai?id="+project.getId()+"'\"\r\n"
+						+ "												class=\"btn btn_confirm\">Thông tin đề tài</button>\r\n");
+			} else{
+				out.println("											<button onclick=\"location.href='/WebCNPM/ChiTietDeTai?id="+project.getId()+"'\"\r\n"
+						+ "												class=\"btn btn_confirm\">Thông tin đề tài</button>\r\n");
+			}
+			out.println("										</div>\r\n" + "									</div>\r\n"
 					+ "								</div>" + "</div>\r\n" + "					</div>\r\n"
 					+ "				</div>");
 		}
