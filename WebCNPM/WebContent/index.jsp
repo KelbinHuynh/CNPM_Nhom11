@@ -46,7 +46,7 @@
 				<div id="project_major">
 					<div class="navbar_purchase d-flex">
 						<div class="navbar_purchase--title ">Tổng Số Đề Tài:
-							${countP}</div>
+							${countP} </div>
 						<div class="navbar_purchase--filter d-flex"></div>
 					</div>
 

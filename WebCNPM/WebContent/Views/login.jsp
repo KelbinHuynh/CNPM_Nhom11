@@ -29,9 +29,6 @@
 					<input type="checkbox" id="remember-me" name="remember"> <label
 						for="remember-me">Nhớ mật khẩu</label>
 				</div>
-				<div class="pass-link">
-					<a href="/WebProject/resetpass">Quên mật khẩu?</a>
-				</div>
 			</div>
 			<div class="field">
 				<input type="submit" value="Đăng nhập">

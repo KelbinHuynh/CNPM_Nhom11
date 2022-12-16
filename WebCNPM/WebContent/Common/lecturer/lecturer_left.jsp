@@ -10,17 +10,32 @@
 
 <nav class="user_sidebar">
 	<ul>
-		<li><a href="${pageContext.request.contextPath}/lecturer"><div class="icon">
+		<li><a href="${pageContext.request.contextPath}/lecturer"><div
+					class="icon">
 					<i class="fa-sharp fa-solid fa-calendar-week"></i>
 				</div> <span>Danh sách đề tài</span></a></li>
-		<li><a href="${pageContext.request.contextPath}/lecturer/projectoflecturer"><div class="icon">
+		<li><a
+			href="${pageContext.request.contextPath}/lecturer/projectoflecturer"><div
+					class="icon">
 					<i class="fa-sharp fa-solid fa-calendar-week"></i>
 				</div> <span>Danh sách đề tài của tôi</span></a></li>
-		<li><a href="${pageContext.request.contextPath}/lecturer/DangKyDeTaiGV"><div class="icon">
+		<li><a
+			href="${pageContext.request.contextPath}/lecturer/DangKyDeTaiGV"><div
+					class="icon">
 					<i class="fa-solid fa-file-signature"></i>
-				</div> <span>Đăng ký đề tài</span></a></li>	
-		<li><a href="${pageContext.request.contextPath}/lecturer/LichVanDap"><div class="icon">
+				</div> <span>Đăng ký đề tài</span></a></li>
+		<li><a
+			href="${pageContext.request.contextPath}/lecturer/LichVanDap"><div
+					class="icon">
 					<i class="fa-solid fa-file-signature"></i>
-				</div> <span>Lịch vấn đáp</span></a></li>	
+				</div> <span>Lịch vấn đáp</span></a></li>
+		<c:set var="checkLevel" value="Trưởng Khoa" />
+		<c:if test="${account.lecturer.level ==  checkLevel}">
+			<li><a
+				href="${pageContext.request.contextPath}/lecturer/XepLich"><div
+						class="icon">
+						<i class="fa-solid fa-file-signature"></i>
+					</div> <span>Chia hội đồng</span></a></li>
+		</c:if>
 	</ul>
 </nav>

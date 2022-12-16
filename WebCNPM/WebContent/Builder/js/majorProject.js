@@ -78,3 +78,33 @@ function loadAdminAccountAdd() {
 		error: function(xhr) { }
 	})
 };
+
+function myfun(){
+	var a = document.getElementsByName('method-lecturer');
+	var newvar = 0;
+	var count;
+	for (count=0; count < a.length; count++){
+		if(a[count].checked==true){
+			newvar = newvar+1;
+		}
+	}
+	if (newvar >= 4){
+		document.getElementById('notvalid').innerHTML = "Không chọn nhiều hơn 3 giảng viên";
+		return false;
+	}
+}
+
+function myfunProject(){
+	var a = document.getElementsByName('method-project');
+	var newvar = 0;
+	var count;
+	for (count=0; count < a.length; count++){
+		if(a[count].checked==true){
+			newvar = newvar+1;
+		}
+	}
+	if (newvar >= 4){
+		document.getElementById('notvalidProject').innerHTML = "Không chọn nhiều hơn 3 đề tài";
+		return false;
+	}
+}
