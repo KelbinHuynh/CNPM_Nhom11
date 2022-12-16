@@ -46,4 +46,51 @@ public class TkbDaoImpl extends DBConnection implements ITkbDao{
 		return tkbList;
 	}
 
+	@Override
+	public void insertLecturerToTkb(String lecturerid, String tkbid) {
+		String sql = "EXEC INS_TKB_LEC ?, ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, tkbid);
+			ps.setString(2, lecturerid);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void insertTeamToTkb(String teamid, String tkbid) {
+		String sql = "EXEC INS_TEAM_TKB ?, ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, tkbid);
+			ps.setString(2, teamid);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void insertTkb(Tkb tkb) {
+		String sql = "EXEC INS_TKB ?, ?, ?";
+		try {
+			Connection conn = super.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, tkb.getRoom());
+			ps.setDate(2, tkb.getDate());
+			ps.setTime(3, tkb.getTimeofday());
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

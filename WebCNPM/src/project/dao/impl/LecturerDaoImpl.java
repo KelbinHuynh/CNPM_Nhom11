@@ -70,10 +70,12 @@ public class LecturerDaoImpl extends DBConnection implements ILecturerDao{
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Lecturer lecturer = new Lecturer();
+				IMajorService majorService = new MajorServiceImpl();
 				lecturer.setId(rs.getString("ID"));
 				lecturer.setFullname(rs.getString("FULLNAME"));
 				lecturer.setMale(rs.getBoolean("MALE"));
 				lecturer.setLevel(rs.getString("LEVEL"));
+				lecturer.setMajor(majorService.findMajorToLecturer(rs.getString("ID")));
 				
 				lecturers.add(lecturer);
 			}
