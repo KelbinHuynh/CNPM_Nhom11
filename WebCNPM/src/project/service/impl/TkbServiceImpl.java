@@ -15,4 +15,22 @@ public class TkbServiceImpl  implements ITkbService {
 		return tkbDao.findAllTkb();
 	}
 
+	@Override
+	public void insertLecturerToTkb(String lecturerid, String tkbid) {
+		tkbDao.insertLecturerToTkb(lecturerid, tkbid);
+		
+	}
+
+	@Override
+	public void insertTeamToTkb(String teamid, String tkbid) {
+		tkbDao.insertTeamToTkb(teamid, tkbid);
+		
+	}
+
+	@Override
+	public void insertTkb(Tkb tkb) {
+		tkbDao.insertTkb(tkb);
+		
+	}
+
 }
